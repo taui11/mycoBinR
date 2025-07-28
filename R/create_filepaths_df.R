@@ -14,6 +14,10 @@
 #' @examples
 #' create_filepaths_df("/project/data_output", "pr_01_", "001")
 create_filepaths_df <- function(base_path, project_nr, TITLE) {
+    stopifnot(is.character(base_path), length(base_path) == 1)
+    stopifnot(is.character(project_nr), length(project_nr) == 1)
+    stopifnot(is.character(TITLE), length(TITLE) == 1)
+
     filepaths <- data.frame(
         name = c("assembly", "coverage", "busco", "taxonomy", "assembly_info", "fasta_folder", "bed_folder", "bam_file", "telomere_left", "telomere_right"),
         path = c(
