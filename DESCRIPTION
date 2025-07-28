@@ -1,11 +1,12 @@
 Package: mycoBinR
-Title: What the Package Does (One Line, Title Case)
+Title: Functions to organize and analyze metagenome data
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+    person("Paul", "Muehlauer", , "paul.muehlauer@student.tugraz.at", role = c("aut", "cre"))
+Description: Provides tools for managing and analyzing fungal genome assembly data, 
+    including file path organization, coverage analysis, and taxonomic classification. 
+    Facilitates streamlined workflows for bioinformatics projects involving fungal genomes.
+License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
