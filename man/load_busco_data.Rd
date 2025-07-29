@@ -2,20 +2,17 @@
 % Please edit documentation in R/helpers_build_contig_table.R
 \name{load_busco_data}
 \alias{load_busco_data}
-\title{Title}
+\title{Loading full_table.tsv file from busco_output}
 \usage{
 load_busco_data(paths_df)
 }
 \arguments{
-\item{paths_df}{TODO}
+\item{paths_df}{Data frame created with create_filepaths_df}
 }
 \value{
-TODO
+A dataframe with busco data
 }
 \description{
-Title
-}
-\examples{
-TODO
+Loading full_table.tsv file from busco_output
 }
 \keyword{internal}

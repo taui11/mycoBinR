@@ -2,20 +2,17 @@
 % Please edit documentation in R/helpers_build_contig_table.R
 \name{load_dna_sequences}
 \alias{load_dna_sequences}
-\title{Title}
+\title{Loading assembly.fasta file}
 \usage{
 load_dna_sequences(paths_df)
 }
 \arguments{
-\item{paths_df}{TODO}
+\item{paths_df}{Data frame created with create_filepaths_df}
 }
 \value{
-TODO
+A matrix of class \code{"DNAbin"} containing DNA sequences
 }
 \description{
-Title
-}
-\examples{
-TODO
+Loading assembly.fasta file
 }
 \keyword{internal}

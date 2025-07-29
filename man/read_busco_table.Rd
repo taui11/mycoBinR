@@ -2,20 +2,20 @@
 % Please edit documentation in R/helpers_build_contig_table.R
 \name{read_busco_table}
 \alias{read_busco_table}
-\title{Title}
+\title{Read and process BUSCO summary table}
 \usage{
 read_busco_table(file, bacterial = FALSE)
 }
 \arguments{
-\item{file}{TODO}
+\item{file}{Character string. Path to the BUSCO summary file.}
 
-\item{bacterial}{TODO}
+\item{bacterial}{Logical. Whether the dataset is bacterial, affecting sequence name cleaning. Default is FALSE.}
 }
 \value{
-TODO
+A contingency table summarizing BUSCO counts by sequence and status.
 }
 \description{
-Title
+Read and process BUSCO summary table
 }
 \examples{
 TODO

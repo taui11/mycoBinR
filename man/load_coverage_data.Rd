@@ -2,20 +2,17 @@
 % Please edit documentation in R/helpers_build_contig_table.R
 \name{load_coverage_data}
 \alias{load_coverage_data}
-\title{Title}
+\title{Loading mean_coverage.tsv file}
 \usage{
 load_coverage_data(paths_df)
 }
 \arguments{
-\item{paths_df}{TODO}
+\item{paths_df}{Data frame created with create_filepaths_df}
 }
 \value{
-TODO
+A data frame with the coverage data
 }
 \description{
-Title
-}
-\examples{
-TODO
+Loading mean_coverage.tsv file
 }
 \keyword{internal}

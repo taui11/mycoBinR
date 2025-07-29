@@ -16,6 +16,6 @@ TODO
 Title
 }
 \examples{
-TODO
+A dataframe with busco data and marking empty parts as Missing
 }
 \keyword{internal}

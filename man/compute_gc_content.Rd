@@ -2,20 +2,17 @@
 % Please edit documentation in R/helpers_build_contig_table.R
 \name{compute_gc_content}
 \alias{compute_gc_content}
-\title{Title}
+\title{Computing GC content}
 \usage{
-compute_gc_content(a)
+compute_gc_content(dna_seq)
 }
 \arguments{
-\item{a}{TODO}
+\item{dna_seq}{A matrix of class \code{"DNAbin"} containing DNA sequences}
 }
 \value{
-TODO
+a single numeric value representing the GC content of that sequence
 }
 \description{
-Title
-}
-\examples{
-TODO
+Computing GC content
 }
 \keyword{internal}

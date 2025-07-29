@@ -1,74 +1,64 @@
-#' Title
+#' Loading assembly_info.txt file
 #'
-#' @param paths_df TODO
+#' @param paths_df Data frame created with create_filepaths_df
 #'
-#' @returns TODO
+#' @return A data frame with the assembly info and the rownames as the contig names.
 #' @keywords  internal
-#'
-#' @examples TODO
 load_assembly_info <- function(paths_df) {
     report <- read.delim(paths_df$path[paths_df$name == "assembly_info"], header = TRUE)
     rownames(report) <- report[, 1]
     return(report)
 }
 
-#' Title
+#' Loading assembly.fasta file
 #'
-#' @param paths_df TODO
+#' @param paths_df Data frame created with create_filepaths_df
 #'
-#' @returns TODO
+#' @return A matrix of class \code{"DNAbin"} containing DNA sequences
 #' @keywords  internal
-#'
-#' @examples TODO
 load_dna_sequences <- function(paths_df) {
-    read.dna(paths_df$path[paths_df$name == "assembly"], format="fasta")
+    ape::read.dna(paths_df$path[paths_df$name == "assembly"], format="fasta")
 }
 
-#' Title
+#' Loading mean_coverage.tsv file
 #'
-#' @param paths_df TODO
+#' @param paths_df Data frame created with create_filepaths_df
 #'
-#' @returns TODO
+#' @return A data frame with the coverage data
 #' @keywords  internal
-#'
-#' @examples TODO
 load_coverage_data <- function(paths_df) {
     read.delim(paths_df$path[paths_df$name == "coverage"], row.names = 1)
 }
 
-#' Title
+#' Loading full_table.tsv file from busco_output
 #'
-#' @param paths_df TODO
+#' @param paths_df Data frame created with create_filepaths_df
 #'
-#' @returns TODO
+#' @return A dataframe with busco data
 #' @keywords  internal
-#'
-#' @examples TODO
 load_busco_data <- function(paths_df) {
     read_busco_table(paths_df$path[paths_df$name == "busco"])
 }
 
-#' Title
+#' Computing GC content
 #'
-#' @param a TODO
+#' @param dna_seq A matrix of class \code{"DNAbin"} containing DNA sequences
 #'
-#' @returns TODO
+#' @return a single numeric value representing the GC content of that sequence
 #' @keywords  internal
-#'
-#' @examples TODO
-compute_gc_content <- function(a) {
-    sapply(a, function(seq) {
+compute_gc_content <- function(dna_seq) {
+    sapply(dna_seq, function(seq) {
         class(seq) <- "DNAbin"
-        GC.content(seq)
+        ape::GC.content(seq)
     })
 }
 
-#' Title
+#' Read and process BUSCO summary table
 #'
-#' @param file TODO
-#' @param bacterial TODO
+#' @param file Character string. Path to the BUSCO summary file.
+#' @param bacterial Logical. Whether the dataset is bacterial, affecting sequence name cleaning. Default is FALSE.
 #'
-#' @returns TODO
+#' @return A contingency table summarizing BUSCO counts by sequence and status.
 #' @keywords  internal
 #'
 #' @examples TODO
@@ -82,10 +72,10 @@ read_busco_table <- function(file, bacterial = FALSE) {
 #'
 #' @param file TODO
 #'
-#' @returns TODO
+#' @return TODO
 #' @keywords  internal
 #'
-#' @examples TODO
+#' @examples A dataframe with busco data and marking empty parts as Missing
 read_busco_file <- function(file) {
     df <- read.delim2(file, sep = "\t", header = TRUE, skip = 2)
     df[df$Status != "Missing", ]
@@ -96,7 +86,7 @@ read_busco_file <- function(file) {
 #' @param df TODO
 #' @param bacterial TODO
 #'
-#' @returns TODO
+#' @return TODO
 #' @keywords  internal
 #'
 #' @examples TODO
@@ -115,7 +105,7 @@ clean_busco_entries <- function(df, bacterial = FALSE) {
 #'
 #' @param df TODO
 #'
-#' @returns TODO
+#' @return TODO
 #' @keywords  internal
 #'
 #' @examples TODO
@@ -130,7 +120,7 @@ summarize_busco_by_squence <- function(df) {
 #' @param cov TODO
 #' @param gc TODO
 #'
-#' @returns TODO
+#' @return TODO
 #' @keywords  internal
 #'
 #' @examples TODO
@@ -156,7 +146,7 @@ build_initial_df <- function(report, nombres, cov, gc) {
 #' @param data TODO
 #' @param report TODO
 #'
-#' @returns TODO
+#' @return TODO
 #' @keywords  internal
 #'
 #' @examples TODO
@@ -174,10 +164,8 @@ enrich_with_graph_info <- function(data, report) {
 #' @param data TODO
 #' @param buscos TODO
 #'
-#' @returns TODO
+#' @return TODO
 #' @keywords  internal
-#'
-#' @examples TODO
 add_busco_data <- function(data, buscos) {
     busco_cols <- intersect(colnames(buscos), colnames(data))
     data[rownames(buscos), busco_cols] <- buscos[, busco_cols]
@@ -188,7 +176,7 @@ add_busco_data <- function(data, buscos) {
 #'
 #' @param data TODO
 #'
-#' @returns TODO
+#' @return TODO
 #' @keywords  internal
 #'
 #' @examples TODO
@@ -202,7 +190,7 @@ cluster_data <- function(data) {
 #'
 #' @param data TODO
 #'
-#' @returns TODO
+#' @return TODO
 #' @keywords  internal
 #'
 #' @examples TODO
@@ -217,7 +205,7 @@ flag_busco_completeness <- function(data) {
 #' @param TAX TODO
 #' @param API_KEY TODO
 #'
-#' @returns TODO
+#' @return TODO
 #' @keywords  internal
 #'
 #' @examples TODO
@@ -237,7 +225,7 @@ process_taxonomy <- function(TAX, API_KEY = NULL) {
 #'
 #' @param TAX TODO
 #'
-#' @returns TODO
+#' @return TODO
 #' @keywords  internal
 #'
 #' @examples TODO
@@ -253,7 +241,7 @@ load_taxonomy_table <- function(TAX) {
 #'
 #' @param tax TODO
 #'
-#' @returns TODO
+#' @return TODO
 #' @keywords  internal
 #'
 #' @examples TODO
@@ -274,7 +262,7 @@ parse_protein_ids <- function(tax) {
 #'
 #' @param tax TODO
 #'
-#' @returns TODO
+#' @return TODO
 #' @keywords  internal
 #'
 #' @examples TODO
@@ -287,7 +275,7 @@ filter_valid_taxids <- function(tax) {
 #' @param taxids TODO
 #' @param API_KEY TODO
 #'
-#' @returns TODO
+#' @return TODO
 #' @keywords  internal
 #'
 #' @examples TODO
@@ -301,7 +289,7 @@ fetch_tax_classification <- function(taxids, API_KEY = NULL) {
 #'
 #' @param taxonomy_list TODO
 #'
-#' @returns TODO
+#' @return TODO
 #' @keywords  internal
 #'
 #' @examples TODO
@@ -328,7 +316,7 @@ build_taxonomy_dataframe <- function(taxonomy_list) {
 #' @param tax TODO
 #' @param tax_df TODO
 #'
-#' @returns TODO
+#' @return TODO
 #' @keywords  internal
 #'
 #' @examples TODO
@@ -340,7 +328,7 @@ merge_tax_data <- function(tax, tax_df) {
 #'
 #' @param tax TODO
 #'
-#' @returns TODO
+#' @return TODO
 #' @keywords  internal
 #'
 #' @examples TODO
@@ -362,7 +350,7 @@ fill_missing_taxonomy <- function(tax) {
 #'
 #' @param tax TODO
 #'
-#' @returns TODO
+#' @return TODO
 #' @keywords  internal
 #'
 #' @examples TODO
@@ -382,7 +370,7 @@ build_taxonomic_partitions <- function(tax) {
 #'
 #' @param cl_list TODO
 #'
-#' @returns TODO
+#' @return TODO
 #' @keywords  internal
 #'
 #' @examples TODO
@@ -397,7 +385,7 @@ compute_consensus_clusters <- function(cl_list) {
 #' @param data TODO
 #' @param consensus_ids TODO
 #'
-#' @returns TODO
+#' @return TODO
 #' @keywords  internal
 #'
 #' @examples TODO
@@ -413,7 +401,7 @@ assign_consensus_clusters <- function(data, consensus_ids) {
 #' @param data TODO
 #' @param cl_list TODO
 #'
-#' @returns TODO
+#' @return TODO
 #' @keywords  internal
 #'
 #' @examples TODO
@@ -443,7 +431,7 @@ extract_taxonomic_labels <- function(data, cl_list) {
 #'
 #' @param data TODO
 #'
-#' @returns TODO
+#' @return TODO
 #' @keywords  internal
 #'
 #' @examples TODO

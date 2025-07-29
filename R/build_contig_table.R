@@ -9,10 +9,10 @@
 #' @examples TODO
 build_contig_table <- function(paths_df, API_KEY = API_KEY) {
     report <- load_assembly_info(paths_df)
-    a <- load_dna_sequences(paths_df)
-    nombres <- names(a)
+    dna_seq <- load_dna_sequences(paths_df)
+    nombres <- names(dna_seq)
     cov <- load_coverage_data(paths_df)
-    gc <- compute_gc_content(a)
+    gc <- compute_gc_content(dna_seq)
     buscos <- load_busco_data(paths_df)
 
     data <- build_initial_df(report, nombres, cov, gc)

@@ -2,20 +2,17 @@
 % Please edit documentation in R/helpers_build_contig_table.R
 \name{load_assembly_info}
 \alias{load_assembly_info}
-\title{Title}
+\title{Loading assembly_info.txt file}
 \usage{
 load_assembly_info(paths_df)
 }
 \arguments{
-\item{paths_df}{TODO}
+\item{paths_df}{Data frame created with create_filepaths_df}
 }
 \value{
-TODO
+A data frame with the assembly info and the rownames as the contig names.
 }
 \description{
-Title
-}
-\examples{
-TODO
+Loading assembly_info.txt file
 }
 \keyword{internal}

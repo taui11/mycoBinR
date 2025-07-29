@@ -7,7 +7,7 @@
 add_busco_data(data, buscos)
 }
 \arguments{
-\item{data}{wenns_des_is_dann_nochmal_denken}
+\item{data}{TODO}
 
 \item{buscos}{TODO}
 }
