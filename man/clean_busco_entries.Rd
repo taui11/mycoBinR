@@ -2,22 +2,19 @@
 % Please edit documentation in R/helpers_build_contig_table.R
 \name{clean_busco_entries}
 \alias{clean_busco_entries}
-\title{Title}
+\title{Clean BUSCO sequence entries}
 \usage{
 clean_busco_entries(df, bacterial = FALSE)
 }
 \arguments{
-\item{df}{TODO}
+\item{df}{Data frame. BUSCO data frame with at least a \code{Sequence} column.}
 
-\item{bacterial}{TODO}
+\item{bacterial}{Logical. Whether to apply bacterial-specific sequence name cleaning. Default is FALSE.}
 }
 \value{
-TODO
+A cleaned data frame with formatted \code{Sequence} and \code{Status} factors.
 }
 \description{
-Title
-}
-\examples{
-TODO
+Clean BUSCO sequence entries
 }
 \keyword{internal}

@@ -7,7 +7,7 @@
 load_coverage_data(paths_df)
 }
 \arguments{
-\item{paths_df}{Data frame created with create_filepaths_df}
+\item{paths_df}{Data frame. Typically created with \code{create_filepaths_df}, containing columns \code{name} and \code{path} for locating input files.}
 }
 \value{
 A data frame with the coverage data

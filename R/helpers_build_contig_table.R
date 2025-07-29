@@ -1,6 +1,6 @@
 #' Loading assembly_info.txt file
 #'
-#' @param paths_df Data frame created with create_filepaths_df
+#' @param paths_df Data frame. Typically created with \code{create_filepaths_df}, containing columns \code{name} and \code{path} for locating input files.
 #'
 #' @return A data frame with the assembly info and the rownames as the contig names.
 #' @keywords  internal
@@ -12,7 +12,7 @@ load_assembly_info <- function(paths_df) {
 
 #' Loading assembly.fasta file
 #'
-#' @param paths_df Data frame created with create_filepaths_df
+#' @param paths_df Data frame. Typically created with \code{create_filepaths_df}, containing columns \code{name} and \code{path} for locating input files.
 #'
 #' @return A matrix of class \code{"DNAbin"} containing DNA sequences
 #' @keywords  internal
@@ -22,7 +22,7 @@ load_dna_sequences <- function(paths_df) {
 
 #' Loading mean_coverage.tsv file
 #'
-#' @param paths_df Data frame created with create_filepaths_df
+#' @param paths_df Data frame. Typically created with \code{create_filepaths_df}, containing columns \code{name} and \code{path} for locating input files.
 #'
 #' @return A data frame with the coverage data
 #' @keywords  internal
@@ -32,7 +32,7 @@ load_coverage_data <- function(paths_df) {
 
 #' Loading full_table.tsv file from busco_output
 #'
-#' @param paths_df Data frame created with create_filepaths_df
+#' @param paths_df Data frame. Typically created with \code{create_filepaths_df}, containing columns \code{name} and \code{path} for locating input files.
 #'
 #' @return A dataframe with busco data
 #' @keywords  internal
@@ -42,7 +42,7 @@ load_busco_data <- function(paths_df) {
 
 #' Computing GC content
 #'
-#' @param dna_seq A matrix of class \code{"DNAbin"} containing DNA sequences
+#' @param dna_seq A matrix of class \code{"DNAbin"}. Containing DNA sequences to be analyzed.
 #'
 #' @return a single numeric value representing the GC content of that sequence
 #' @keywords  internal
@@ -60,36 +60,30 @@ compute_gc_content <- function(dna_seq) {
 #'
 #' @return A contingency table summarizing BUSCO counts by sequence and status.
 #' @keywords  internal
-#'
-#' @examples TODO
 read_busco_table <- function(file, bacterial = FALSE) {
     df <- read_busco_file(file)
     df <- clean_busco_entries(df, bacterial = bacterial)
     summarize_busco_by_squence(df)
 }
 
-#' Title
+#' Read raw BUSCO data file
 #'
-#' @param file TODO
+#' @param file Character string. Path to the BUSCO data file
 #'
-#' @return TODO
+#' @return A filtered data frame of BUSCO entries excluding those with status "Missing".
 #' @keywords  internal
-#'
-#' @examples A dataframe with busco data and marking empty parts as Missing
 read_busco_file <- function(file) {
     df <- read.delim2(file, sep = "\t", header = TRUE, skip = 2)
     df[df$Status != "Missing", ]
 }
 
-#' Title
+#' Clean BUSCO sequence entries
 #'
-#' @param df TODO
-#' @param bacterial TODO
+#' @param df Data frame. BUSCO data frame with at least a \code{Sequence} column.
+#' @param bacterial Logical. Whether to apply bacterial-specific sequence name cleaning. Default is FALSE.
 #'
-#' @return TODO
+#' @return A cleaned data frame with formatted \code{Sequence} and \code{Status} factors.
 #' @keywords  internal
-#'
-#' @examples TODO
 clean_busco_entries <- function(df, bacterial = FALSE) {
     df$Sequence <- sapply(strsplit(as.character(df$Sequence), ":"), `[`, 1)
     if (bacterial) {
@@ -101,14 +95,12 @@ clean_busco_entries <- function(df, bacterial = FALSE) {
     df
 }
 
-#' Title
+#' Summarize BUSCO counts by sequence and status
 #'
-#' @param df TODO
+#' @param df Data frame. BUSCO data frame with sequence and status columns
 #'
-#' @return TODO
+#' @return A contingency table (matrix) of counts indexed by sequence and status.
 #' @keywords  internal
-#'
-#' @examples TODO
 summarize_busco_by_squence <- function(df) {
     table(df[, 3], df[, 2])
 }
@@ -452,3 +444,7 @@ summarize_taxonomy <- function(data) {
 
     return(data)
 }
+
+
+
+

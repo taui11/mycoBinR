@@ -2,20 +2,17 @@
 % Please edit documentation in R/helpers_build_contig_table.R
 \name{summarize_busco_by_squence}
 \alias{summarize_busco_by_squence}
-\title{Title}
+\title{Summarize BUSCO counts by sequence and status}
 \usage{
 summarize_busco_by_squence(df)
 }
 \arguments{
-\item{df}{TODO}
+\item{df}{Data frame. BUSCO data frame with sequence and status columns}
 }
 \value{
-TODO
+A contingency table (matrix) of counts indexed by sequence and status.
 }
 \description{
-Title
-}
-\examples{
-TODO
+Summarize BUSCO counts by sequence and status
 }
 \keyword{internal}

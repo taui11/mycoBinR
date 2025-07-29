@@ -7,7 +7,7 @@
 compute_gc_content(dna_seq)
 }
 \arguments{
-\item{dna_seq}{A matrix of class \code{"DNAbin"} containing DNA sequences}
+\item{dna_seq}{A matrix of class \code{"DNAbin"}. Containing DNA sequences to be analyzed.}
 }
 \value{
 a single numeric value representing the GC content of that sequence

@@ -2,20 +2,17 @@
 % Please edit documentation in R/helpers_build_contig_table.R
 \name{read_busco_file}
 \alias{read_busco_file}
-\title{Title}
+\title{Read raw BUSCO data file}
 \usage{
 read_busco_file(file)
 }
 \arguments{
-\item{file}{TODO}
+\item{file}{Character string. Path to the BUSCO data file}
 }
 \value{
-TODO
+A filtered data frame of BUSCO entries excluding those with status "Missing".
 }
 \description{
-Title
-}
-\examples{
-A dataframe with busco data and marking empty parts as Missing
+Read raw BUSCO data file
 }
 \keyword{internal}

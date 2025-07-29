@@ -17,7 +17,4 @@ A contingency table summarizing BUSCO counts by sequence and status.
 \description{
 Read and process BUSCO summary table
 }
-\examples{
-TODO
-}
 \keyword{internal}

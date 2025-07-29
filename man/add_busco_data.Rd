@@ -17,7 +17,4 @@ TODO
 \description{
 Title
 }
-\examples{
-TODO
-}
 \keyword{internal}
