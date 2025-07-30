@@ -2,22 +2,24 @@
 % Please edit documentation in R/helpers_build_contig_table.R
 \name{enrich_with_graph_info}
 \alias{enrich_with_graph_info}
-\title{Title}
+\title{Annotate contigs with graph completeness}
 \usage{
 enrich_with_graph_info(data, report)
 }
 \arguments{
-\item{data}{TODO}
+\item{data}{Data frame. Contains a contig-level data frame from build_initial_df.}
 
-\item{report}{TODO}
+\item{report}{Data frame. Contains the assembly info and the rownames as the contig names.}
 }
 \value{
-TODO
+A modified version of \code{data} with a \code{complete_graph} column where:
+\describe{
+\item{0}{Path does not contain a \code{"*"}}
+\item{1}{Path contains a \code{"*"}}
+\item{2}{Path contains a \code{"*"} and is duplicated}
+}
 }
 \description{
-Title
-}
-\examples{
-TODO
+Annotate contigs with graph completeness
 }
 \keyword{internal}

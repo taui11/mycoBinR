@@ -10,7 +10,7 @@ load_busco_data(paths_df)
 \item{paths_df}{Data frame. Typically created with \code{create_filepaths_df}, containing columns \code{name} and \code{path} for locating input files.}
 }
 \value{
-A dataframe with busco data
+A data frame with BUSCO data
 }
 \description{
 Loading full_table.tsv file from busco_output

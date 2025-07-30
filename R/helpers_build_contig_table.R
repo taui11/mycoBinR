@@ -34,7 +34,7 @@ load_coverage_data <- function(paths_df) {
 #'
 #' @param paths_df Data frame. Typically created with \code{create_filepaths_df}, containing columns \code{name} and \code{path} for locating input files.
 #'
-#' @return A dataframe with busco data
+#' @return A data frame with BUSCO data
 #' @keywords  internal
 load_busco_data <- function(paths_df) {
     read_busco_table(paths_df$path[paths_df$name == "busco"])
@@ -105,43 +105,44 @@ summarize_busco_by_squence <- function(df) {
     table(df[, 3], df[, 2])
 }
 
-#' Title
+#' Build initial contig-level data frame
 #'
-#' @param report TODO
-#' @param nombres TODO
-#' @param cov TODO
-#' @param gc TODO
+#' @param report Data frame. Contains the assembly info and the rownames as the contig names.
+#' @param contig_names Character vector. Contains the contig IDs.
+#' @param cov Data frame. Contains the covetage data.
+#' @param gc Named numeric vector. Contains GC content values, names should match contig IDs.
 #'
-#' @return TODO
+#' @return A Data frame with contig-level metrics and placeholder columns for later annotation.
 #' @keywords  internal
-#'
-#' @examples TODO
-build_initial_df <- function(report, nombres, cov, gc) {
+build_initial_df <- function(report, contig_names, cov, gc) {
     data.frame(
-        cov=cov[nombres,1],
-        len=report[nombres,2],
-        gc=gc[nombres],
-        circ=report[nombres,4],
-        rep=report[nombres,5],
-        multiplicity=report[nombres,6],
-        alt_group=report[nombres,7],
-        path=report[nombres,8],
-        complete_graph=0,
-        Complete=0,
-        Duplicated=0,
-        Fragmented=0
+        cov=cov[contig_names, 1],
+        len=report[contig_names, 2],
+        gc=gc[contig_names],
+        circ=report[contig_names, 4],
+        rep=report[contig_names, 5],
+        multiplicity=report[contig_names, 6],
+        alt_group=report[contig_names, 7],
+        path=report[contig_names, 8],
+        complete_graph = 0,
+        Complete = 0,
+        Duplicated = 0,
+        Fragmented = 0
     )
 }
 
-#' Title
+#' Annotate contigs with graph completeness
 #'
-#' @param data TODO
-#' @param report TODO
+#' @param data Data frame. Contains a contig-level data frame from build_initial_df.
+#' @param report Data frame. Contains the assembly info and the rownames as the contig names.
 #'
-#' @return TODO
+#' @return A modified version of `data` with a `complete_graph` column where:
+#'      \describe{
+#'          \item{0}{Path does not contain a `"*"`}
+#'          \item{1}{Path contains a `"*"`}
+#'          \item{2}{Path contains a `"*"` and is duplicated}
+#'      }
 #' @keywords  internal
-#'
-#' @examples TODO
 enrich_with_graph_info <- function(data, report) {
     graph_paths <- report[rownames(data), 8]
     star_pattern <- grepl("\\*", graph_paths)
@@ -151,12 +152,12 @@ enrich_with_graph_info <- function(data, report) {
     return(data)
 }
 
-#' Title
+#' Adding the BUSCO data to data frame.
 #'
-#' @param data TODO
-#' @param buscos TODO
+#' @param data Data frame. Contains a contig-level data frame from enrich_with_graph_info.
+#' @param buscos Data frame Contains BUSCO data.
 #'
-#' @return TODO
+#' @return A data frame with additional columns containing BUSCO metrics.
 #' @keywords  internal
 add_busco_data <- function(data, buscos) {
     busco_cols <- intersect(colnames(buscos), colnames(data))
@@ -164,28 +165,34 @@ add_busco_data <- function(data, buscos) {
     return(data)
 }
 
-#' Title
+#' Creating and adding cluster classification based on coverage and GC content.
 #'
-#' @param data TODO
+#' @param data Data frame. Contains a contig-level data frame with columns `cov`and `gc`.
 #'
-#' @return TODO
+#' @return A data frame with added `clas` column indicating cluster membership.
 #' @keywords  internal
-#'
-#' @examples TODO
 cluster_data <- function(data) {
-    clusters <- Mclust(data[, c("cov", "gc")], G = 1:20)
+    clusters <- mclust::Mclust(data[, c("cov", "gc")], G = 1:20)
     data$clas <- clusters$classification
     return(data)
 }
 
-#' Title
+#' Flag BUSCO completeness and duplication status
 #'
-#' @param data TODO
+#' @param data Data frame. Should contain at least `Complete` and a combined completeness-duplication factor.
 #'
-#' @return TODO
+#' @return The input data frame with two additional columns:
+#'      \describe{
+#'          \item{bc1}{Logical vector indicating if `Complete` is non-zero (TRUE if complete).}
+#'          \item{bc_combined}{Factor indicating combined BUSCO completeness and duplication status:
+#'              \itemize{
+#'                  \item 0 = neither complete nor duplicated
+#'                  \item 1 = complete only
+#'                  \item 2 = complete and duplicated
+#'              }
+#'          }
+#'      }
 #' @keywords  internal
-#'
-#' @examples TODO
 flag_busco_completeness <- function(data) {
     data$bc1 <- data$Complete != 0
     data$bc_combined <- factor(as.numeric(data$Complete != 0) + as.numeric(data$Duplicated != 0))

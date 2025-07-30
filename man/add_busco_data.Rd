@@ -2,19 +2,19 @@
 % Please edit documentation in R/helpers_build_contig_table.R
 \name{add_busco_data}
 \alias{add_busco_data}
-\title{Title}
+\title{Adding the BUSCO data to data frame.}
 \usage{
 add_busco_data(data, buscos)
 }
 \arguments{
-\item{data}{TODO}
+\item{data}{Data frame. Contains a contig-level data frame from enrich_with_graph_info.}
 
-\item{buscos}{TODO}
+\item{buscos}{Data frame Contains BUSCO data.}
 }
 \value{
-TODO
+A data frame with additional columns containing BUSCO metrics.
 }
 \description{
-Title
+Adding the BUSCO data to data frame.
 }
 \keyword{internal}

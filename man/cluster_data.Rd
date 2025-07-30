@@ -2,20 +2,17 @@
 % Please edit documentation in R/helpers_build_contig_table.R
 \name{cluster_data}
 \alias{cluster_data}
-\title{Title}
+\title{Creating and adding cluster classification based on coverage and GC content.}
 \usage{
 cluster_data(data)
 }
 \arguments{
-\item{data}{TODO}
+\item{data}{Data frame. Contains a contig-level data frame with columns \code{cov}and \code{gc}.}
 }
 \value{
-TODO
+A data frame with added \code{clas} column indicating cluster membership.
 }
 \description{
-Title
-}
-\examples{
-TODO
+Creating and adding cluster classification based on coverage and GC content.
 }
 \keyword{internal}

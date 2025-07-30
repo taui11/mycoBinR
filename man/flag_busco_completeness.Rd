@@ -2,20 +2,27 @@
 % Please edit documentation in R/helpers_build_contig_table.R
 \name{flag_busco_completeness}
 \alias{flag_busco_completeness}
-\title{Title}
+\title{Flag BUSCO completeness and duplication status}
 \usage{
 flag_busco_completeness(data)
 }
 \arguments{
-\item{data}{TODO}
+\item{data}{Data frame. Should contain at least \code{Complete} and a combined completeness-duplication factor.}
 }
 \value{
-TODO
+The input data frame with two additional columns:
+\describe{
+\item{bc1}{Logical vector indicating if \code{Complete} is non-zero (TRUE if complete).}
+\item{bc_combined}{Factor indicating combined BUSCO completeness and duplication status:
+\itemize{
+\item 0 = neither complete nor duplicated
+\item 1 = complete only
+\item 2 = complete and duplicated
+}
+}
+}
 }
 \description{
-Title
-}
-\examples{
-TODO
+Flag BUSCO completeness and duplication status
 }
 \keyword{internal}

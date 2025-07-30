@@ -2,26 +2,23 @@
 % Please edit documentation in R/helpers_build_contig_table.R
 \name{build_initial_df}
 \alias{build_initial_df}
-\title{Title}
+\title{Build initial contig-level data frame}
 \usage{
-build_initial_df(report, nombres, cov, gc)
+build_initial_df(report, contig_names, cov, gc)
 }
 \arguments{
-\item{report}{TODO}
+\item{report}{Data frame. Contains the assembly info and the rownames as the contig names.}
 
-\item{nombres}{TODO}
+\item{contig_names}{Character vector. Contains the contig IDs.}
 
-\item{cov}{TODO}
+\item{cov}{Data frame. Contains the covetage data.}
 
-\item{gc}{TODO}
+\item{gc}{Named numeric vector. Contains GC content values, names should match contig IDs.}
 }
 \value{
-TODO
+A Data frame with contig-level metrics and placeholder columns for later annotation.
 }
 \description{
-Title
-}
-\examples{
-TODO
+Build initial contig-level data frame
 }
 \keyword{internal}
