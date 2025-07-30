@@ -1,3 +1,7 @@
+if (getRversion() >= "2.15.1") {
+    utils::globalVariables(c(".data", "id", "name", "domain", "kingdom", "phylum", "family", "genus", "rank", "names", "taxonomy_list"))
+}
+
 #' Loading assembly_info.txt file
 #'
 #' @param paths_df Data frame. Typically created with \code{create_filepaths_df}, containing columns \code{name} and \code{path} for locating input files.
@@ -88,7 +92,7 @@ clean_busco_entries <- function(df, bacterial = FALSE) {
     df$Sequence <- sapply(strsplit(as.character(df$Sequence), ":"), `[`, 1)
     if (bacterial) {
         parts <- strsplit(as.character(df[, 3]), "_")
-        df$Sequence <- sapply(parts, function(x) paste(head(x, length(x) - 9), collapse = "_"))
+        df$Sequence <- sapply(parts, function(x) paste(utils::head(x, length(x) - 9), collapse = "_"))
     }
     df$Sequence <- factor(df$Sequence)
     df[, 2] <- factor(as.character(df[, 2]))
@@ -279,6 +283,8 @@ fetch_tax_classification <- function(taxids, api_key = NULL) {
 #'
 #' @param taxonomy_list Named list. Taxonomic classification data frame filtered by major ranks.
 #'
+#' @importFrom magrittr %>%
+#'
 #' @return Data frame with columns from taxon names and major taxonomic ranks (domain to genus).
 #' @keywords  internal
 build_taxonomy_dataframe <- function(taxonomy_list) {
@@ -291,7 +297,7 @@ build_taxonomy_dataframe <- function(taxonomy_list) {
         dplyr::filter(rank %in% c("domain", "kingdom", "phylum", "class", "order", "family", "genus")) %>%
         dplyr::select(-id) %>%
         tidyr::pivot_wider(names_from = rank, values_from = name) %>%
-        select(name = names, domain, kingdom, phylum, class, order, family, genus) %>%
+        dplyr::select(name = .data$names, .data$domain, .data$kingdom, .data$phylum, .data$class, .data$order, .data$family, .data$genus) %>%
         as.data.frame() %>%
         {
             rownames(.) <- make.unique(as.character(.$name))

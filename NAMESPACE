@@ -2,3 +2,4 @@
 
 export(build_contig_table)
 export(create_filepaths_df)
+importFrom(magrittr,"%>%")
