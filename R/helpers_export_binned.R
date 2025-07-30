@@ -1,9 +1,9 @@
 #' Title
 #'
-#' @param fasta_folder
-#' @param bed_folder
+#' @param fasta_folder TODO
+#' @param bed_folder TODO
 #'
-#' @returns
+#' @returns TODO
 #' @keywords internal
 create_output_dirs <- function(fasta_folder, bed_folder) {
     dir.create(fasta_folder, recursive = TRUE, showWarnings = FALSE)
@@ -13,9 +13,9 @@ create_output_dirs <- function(fasta_folder, bed_folder) {
 
 #' Title
 #'
-#' @param data
+#' @param data TODO
 #'
-#' @returns
+#' @returns TODO
 #' @keywords internal
 build_categories_df <- function(data) {
     data$bin_label <- paste0("bin_", data$tax_cons)
@@ -29,12 +29,12 @@ build_categories_df <- function(data) {
 
 #' Title
 #'
-#' @param fasta
-#' @param categories
-#' @param fasta_folder
-#' @param sample_name
+#' @param fasta TODO
+#' @param categories TODO
+#' @param fasta_folder TODO
+#' @param sample_name TODO
 #'
-#' @returns
+#' @returns TODO
 #' @keywords internal
 export_fasta_bins <- function(fasta, categories, fasta_folder, sample_name) {
     for (bin_level in levels(categories$bin)) {
@@ -46,11 +46,11 @@ export_fasta_bins <- function(fasta, categories, fasta_folder, sample_name) {
 
 #' Title
 #'
-#' @param categories
-#' @param bed_folder
-#' @param sample_name
+#' @param categories TODO
+#' @param bed_folder TODO
+#' @param sample_name TODO
 #'
-#' @returns
+#' @returns TODO
 #' @keywords internal
 export_bed_bins <- function(categories, bed_folder, sample_name) {
     for (bin_level in levels(categories$bin)) {

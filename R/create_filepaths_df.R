@@ -6,7 +6,7 @@
 #'
 #' @param base_path Character. The base directory path.
 #' @param project_nr Character or numeric. The project number identifier.
-#' @param TITLE Character. The project title or identifier.
+#' @param TITLE Character. The sample title or identifier.
 #'
 #' @return A data frame with columns \code{name} and \code{path}, listing expected output files.
 #' @export

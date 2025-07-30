@@ -1,13 +1,13 @@
 #' Title
 #'
-#' @param DATA
-#' @param paths_df
-#' @param SAMPLE
+#' @param DATA TODO
+#' @param paths_df TODO
+#' @param SAMPLE TODO
 #'
-#' @returns
+#' @returns TODO
 #' @export
 #'
-#' @examples
+#' @examples TODO
 export_binned <- function(DATA, paths_df, SAMPLE) {
     fasta <- read.FASTA(paths_df$path[paths_df$name == "assembly"])
 

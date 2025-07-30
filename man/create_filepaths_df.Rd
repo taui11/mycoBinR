@@ -11,7 +11,7 @@ create_filepaths_df(base_path, project_nr, TITLE)
 
 \item{project_nr}{Character or numeric. The project number identifier.}
 
-\item{TITLE}{Character. The project title or identifier.}
+\item{TITLE}{Character. The sample title or identifier.}
 }
 \value{
 A data frame with columns \code{name} and \code{path}, listing expected output files.
