@@ -2,20 +2,17 @@
 % Please edit documentation in R/helpers_build_contig_table.R
 \name{summarize_taxonomy}
 \alias{summarize_taxonomy}
-\title{Title}
+\title{Summarize taxonomic classification with simplified labels}
 \usage{
 summarize_taxonomy(data)
 }
 \arguments{
-\item{data}{TODO}
+\item{data}{Data frame. Input data with taxonomic columns (\code{domain}, \code{class} and \code{tax_cons})}
 }
 \value{
-TODO
+The input data frame with updated \code{summ_class} and recoded \code{tax_cons} factor levels.
 }
 \description{
-Title
-}
-\examples{
-TODO
+Summarize taxonomic classification with simplified labels
 }
 \keyword{internal}

@@ -2,22 +2,19 @@
 % Please edit documentation in R/helpers_build_contig_table.R
 \name{process_taxonomy}
 \alias{process_taxonomy}
-\title{Title}
+\title{Process taxonomy data through multiple steps}
 \usage{
-process_taxonomy(TAX, API_KEY = NULL)
+process_taxonomy(tax_path, api_key = NULL)
 }
 \arguments{
-\item{TAX}{TODO}
+\item{tax_path}{Character string. Contains the path to the taxonomy table.}
 
-\item{API_KEY}{TODO}
+\item{api_key}{Character string or NULL. NCBI API key needed for fetching taxonomy classification.}
 }
 \value{
-TODO
+A list of taxonomic partitions constructed from processed taxonomy data.
 }
 \description{
-Title
-}
-\examples{
-TODO
+Process taxonomy data through multiple steps
 }
 \keyword{internal}

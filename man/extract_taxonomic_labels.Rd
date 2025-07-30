@@ -2,22 +2,19 @@
 % Please edit documentation in R/helpers_build_contig_table.R
 \name{extract_taxonomic_labels}
 \alias{extract_taxonomic_labels}
-\title{Title}
+\title{Extract taxonomic labels from cluster partitions}
 \usage{
 extract_taxonomic_labels(data, cl_list)
 }
 \arguments{
-\item{data}{TODO}
+\item{data}{Data frame. Input data with rownames matching cluster partitions.}
 
-\item{cl_list}{TODO}
+\item{cl_list}{List. A list of cluster partition objects, each representing taxonomic clustering at different ranks.}
 }
 \value{
-TODO
+A data frame with taxonomic classification labels for each input row, with columns for taxonomic ranks.
 }
 \description{
-Title
-}
-\examples{
-TODO
+Extract taxonomic labels from cluster partitions
 }
 \keyword{internal}

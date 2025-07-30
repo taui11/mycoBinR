@@ -2,7 +2,7 @@ Package: mycoBinR
 Title: Functions to organize and analyze metagenome data
 Version: 0.0.0.9000
 Authors@R: 
-    person("Paul", "Muehlauer", , "paul.muehlauer@student.tugraz.at", role = c("aut", "cre"))
+    person("Paul", "Muehlauer", email = "paul.muehlauer@student.tugraz.at", role = c("aut", "cre"))
 Description: Provides tools for managing and analyzing fungal genome assembly data, 
     including file path organization, coverage analysis, and taxonomic classification. 
     Facilitates streamlined workflows for bioinformatics projects involving fungal genomes.
@@ -13,3 +13,12 @@ RoxygenNote: 7.3.2
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
+Imports:
+    utils,
+    ape,
+    mclust,
+    taxize,
+    tibble,
+    tidyr,
+    dplyr,
+    clue

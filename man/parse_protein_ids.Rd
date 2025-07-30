@@ -2,20 +2,17 @@
 % Please edit documentation in R/helpers_build_contig_table.R
 \name{parse_protein_ids}
 \alias{parse_protein_ids}
-\title{Title}
+\title{Parse protein identifiers into config, start, end, and taxid columns}
 \usage{
 parse_protein_ids(tax)
 }
 \arguments{
-\item{tax}{TODO}
+\item{tax}{Data frame. Must contain a column \code{prot} with protein IDs and a \code{taxid} column. Typically from load_taxonomy_table}
 }
 \value{
-TODO
+A Data frame with columns \code{contig}, \code{start}, \code{end} and  \code{ev}
 }
 \description{
-Title
-}
-\examples{
-TODO
+Parse protein identifiers into config, start, end, and taxid columns
 }
 \keyword{internal}

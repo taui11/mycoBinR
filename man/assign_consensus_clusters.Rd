@@ -2,22 +2,19 @@
 % Please edit documentation in R/helpers_build_contig_table.R
 \name{assign_consensus_clusters}
 \alias{assign_consensus_clusters}
-\title{Title}
+\title{Assign consensus cluster IDs to the data}
 \usage{
 assign_consensus_clusters(data, consensus_ids)
 }
 \arguments{
-\item{data}{TODO}
+\item{data}{Data frame. Input data to which consensus clusters will be assigned.}
 
-\item{consensus_ids}{TODO}
+\item{consensus_ids}{Named vector or factor. Consensus cluster IDs indexed by row names of \code{data}}
 }
 \value{
-TODO
+The input data frame with an additional column \code{tax_cons} containing cluster assignments.
 }
 \description{
-Title
-}
-\examples{
-TODO
+Assign consensus cluster IDs to the data
 }
 \keyword{internal}

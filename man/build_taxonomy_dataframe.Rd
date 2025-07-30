@@ -2,20 +2,17 @@
 % Please edit documentation in R/helpers_build_contig_table.R
 \name{build_taxonomy_dataframe}
 \alias{build_taxonomy_dataframe}
-\title{Title}
+\title{Build a taxonomy data frame from classification list}
 \usage{
 build_taxonomy_dataframe(taxonomy_list)
 }
 \arguments{
-\item{taxonomy_list}{TODO}
+\item{taxonomy_list}{Named list. Taxonomic classification data frame filtered by major ranks.}
 }
 \value{
-TODO
+Data frame with columns from taxon names and major taxonomic ranks (domain to genus).
 }
 \description{
-Title
-}
-\examples{
-TODO
+Build a taxonomy data frame from classification list
 }
 \keyword{internal}

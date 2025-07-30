@@ -2,22 +2,19 @@
 % Please edit documentation in R/helpers_build_contig_table.R
 \name{fetch_tax_classification}
 \alias{fetch_tax_classification}
-\title{Title}
+\title{Fetch taxonomy classification from NCBI database}
 \usage{
-fetch_tax_classification(taxids, API_KEY = NULL)
+fetch_tax_classification(taxids, api_key = NULL)
 }
 \arguments{
-\item{taxids}{TODO}
+\item{taxids}{Integer or character vector of taxonomic IDs.}
 
-\item{API_KEY}{TODO}
+\item{api_key}{Character string or NULL. API key needed for NCBI Entrez.}
 }
 \value{
-TODO
+A named list of taxonomic classification.
 }
 \description{
-Title
-}
-\examples{
-TODO
+Fetch taxonomy classification from NCBI database
 }
 \keyword{internal}

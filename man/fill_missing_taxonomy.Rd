@@ -2,20 +2,17 @@
 % Please edit documentation in R/helpers_build_contig_table.R
 \name{fill_missing_taxonomy}
 \alias{fill_missing_taxonomy}
-\title{Title}
+\title{Fill missing taxonomy ranks by propagating from higher levels}
 \usage{
 fill_missing_taxonomy(tax)
 }
 \arguments{
-\item{tax}{TODO}
+\item{tax}{Data frame. Taxonomy data frame with columns for ranks: domain, kingdom, phylum, etc.}
 }
 \value{
-TODO
+Taxonomy data frame with missing ranks filled where possible.
 }
 \description{
-Title
-}
-\examples{
-TODO
+Fill missing taxonomy ranks by propagating from higher levels
 }
 \keyword{internal}

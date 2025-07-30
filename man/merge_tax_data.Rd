@@ -2,22 +2,19 @@
 % Please edit documentation in R/helpers_build_contig_table.R
 \name{merge_tax_data}
 \alias{merge_tax_data}
-\title{Title}
+\title{Merge original taxonomy data with classification data frame}
 \usage{
 merge_tax_data(tax, tax_df)
 }
 \arguments{
-\item{tax}{TODO}
+\item{tax}{Data frame. Original taxonomy data including \code{taxid}.}
 
-\item{tax_df}{TODO}
+\item{tax_df}{Data frame. Classification data frame keyed by taxonomic ID.}
 }
 \value{
-TODO
+Combined data frame with columns from both inputs.
 }
 \description{
-Title
-}
-\examples{
-TODO
+Merge original taxonomy data with classification data frame
 }
 \keyword{internal}

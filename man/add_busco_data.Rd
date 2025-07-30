@@ -2,7 +2,7 @@
 % Please edit documentation in R/helpers_build_contig_table.R
 \name{add_busco_data}
 \alias{add_busco_data}
-\title{Adding the BUSCO data to data frame.}
+\title{Adding the BUSCO data to data frame}
 \usage{
 add_busco_data(data, buscos)
 }
@@ -15,6 +15,6 @@ add_busco_data(data, buscos)
 A data frame with additional columns containing BUSCO metrics.
 }
 \description{
-Adding the BUSCO data to data frame.
+Adding the BUSCO data to data frame
 }
 \keyword{internal}

@@ -2,21 +2,32 @@
 % Please edit documentation in R/build_contig_table.R
 \name{build_contig_table}
 \alias{build_contig_table}
-\title{Title}
+\title{Build contig-level data table from input paths and taxonomy}
 \usage{
-build_contig_table(paths_df, API_KEY = API_KEY)
+build_contig_table(paths_df, api_key = NULL)
 }
 \arguments{
-\item{paths_df}{TODO}
+\item{paths_df}{Data frame. Must contain a column named \code{path} with file paths to input data,
+and a column \code{name} to identify the type of each file (e.g., "taxonomy"). Typically from create_filepaths_df.}
 
-\item{API_KEY}{TODO}
+\item{api_key}{Character string or NULL. NCBI Entrez API key needed for fetching taxonomy.}
 }
 \value{
-TODO
+A data frame with one row per contig, enriched with computed features, clustering,
+BUSCO information, taxonomic classification, and summary labels.
 }
 \description{
-Title
+This function integrates multiple sources of contig-level information including
+assembly reports, DNA sequences, coverage data, GC content, BUSCO results, and taxonomy.
+It performs clustering and classification steps to enrich the contig table with biological
+and taxonomic context.
 }
 \examples{
-TODO
+\dontrun{
+paths_df <- data.frame(
+  name = c("assembly", "coverage", "busco", "taxonomy"),
+  path = c("assembly_report.txt", "coverage.tsv", "busco.txt", "taxonomy.tsv")
+)
+build_contig_table(paths_df, API_KEY = "your_ncbi_api_key")
+}
 }

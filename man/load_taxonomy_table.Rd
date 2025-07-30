@@ -2,20 +2,18 @@
 % Please edit documentation in R/helpers_build_contig_table.R
 \name{load_taxonomy_table}
 \alias{load_taxonomy_table}
-\title{Title}
+\title{Load taxonomy table from a file}
 \usage{
-load_taxonomy_table(TAX)
+load_taxonomy_table(tax_path)
 }
 \arguments{
-\item{TAX}{TODO}
+\item{tax_path}{Character string. File path to the taxonomy table}
 }
 \value{
-TODO
+A data frame with columns \code{prot}, \code{taxid}, \code{ev}, and \code{path}.
+Duplicated protein IDs are suffixed with \verb{_dup}
 }
 \description{
-Title
-}
-\examples{
-TODO
+Load taxonomy table from a file
 }
 \keyword{internal}

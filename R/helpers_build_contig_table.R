@@ -5,7 +5,7 @@
 #' @return A data frame with the assembly info and the rownames as the contig names.
 #' @keywords  internal
 load_assembly_info <- function(paths_df) {
-    report <- read.delim(paths_df$path[paths_df$name == "assembly_info"], header = TRUE)
+    report <- utils::read.delim(paths_df$path[paths_df$name == "assembly_info"], header = TRUE)
     rownames(report) <- report[, 1]
     return(report)
 }
@@ -27,7 +27,7 @@ load_dna_sequences <- function(paths_df) {
 #' @return A data frame with the coverage data
 #' @keywords  internal
 load_coverage_data <- function(paths_df) {
-    read.delim(paths_df$path[paths_df$name == "coverage"], row.names = 1)
+    utils::read.delim(paths_df$path[paths_df$name == "coverage"], row.names = 1)
 }
 
 #' Loading full_table.tsv file from busco_output
@@ -73,7 +73,7 @@ read_busco_table <- function(file, bacterial = FALSE) {
 #' @return A filtered data frame of BUSCO entries excluding those with status "Missing".
 #' @keywords  internal
 read_busco_file <- function(file) {
-    df <- read.delim2(file, sep = "\t", header = TRUE, skip = 2)
+    df <- utils::read.delim2(file, sep = "\t", header = TRUE, skip = 2)
     df[df$Status != "Missing", ]
 }
 
@@ -152,7 +152,7 @@ enrich_with_graph_info <- function(data, report) {
     return(data)
 }
 
-#' Adding the BUSCO data to data frame.
+#' Adding the BUSCO data to data frame
 #'
 #' @param data Data frame. Contains a contig-level data frame from enrich_with_graph_info.
 #' @param buscos Data frame Contains BUSCO data.
@@ -199,20 +199,18 @@ flag_busco_completeness <- function(data) {
     return(data)
 }
 
-#' Title
+#' Process taxonomy data through multiple steps
 #'
-#' @param TAX TODO
-#' @param API_KEY TODO
+#' @param tax_path Character string. Contains the path to the taxonomy table.
+#' @param api_key Character string or NULL. NCBI API key needed for fetching taxonomy classification.
 #'
-#' @return TODO
+#' @return A list of taxonomic partitions constructed from processed taxonomy data.
 #' @keywords  internal
-#'
-#' @examples TODO
-process_taxonomy <- function(TAX, API_KEY = NULL) {
-    tax <- load_taxonomy_table(TAX)
+process_taxonomy <- function(tax_path, api_key = NULL) {
+    tax <- load_taxonomy_table(tax_path)
     tax <- parse_protein_ids(tax)
     tax <- filter_valid_taxids(tax)
-    taxonomy_list <- fetch_tax_classification(tax$taxid, API_KEY)
+    taxonomy_list <- fetch_tax_classification(tax$taxid, api_key)
     tax_df <- build_taxonomy_dataframe(taxonomy_list)
     tax <- merge_tax_data(tax, tax_df)
     tax_filled <- fill_missing_taxonomy(tax)
@@ -220,30 +218,27 @@ process_taxonomy <- function(TAX, API_KEY = NULL) {
     return(cl_list)
 }
 
-#' Title
+#' Load taxonomy table from a file
 #'
-#' @param TAX TODO
+#' @param tax_path Character string. File path to the taxonomy table
 #'
-#' @return TODO
+#' @return A data frame with columns `prot`, `taxid`, `ev`, and `path`.
+#'      Duplicated protein IDs are suffixed with `_dup`
 #' @keywords  internal
-#'
-#' @examples TODO
-load_taxonomy_table <- function(TAX) {
-    tax <- read.delim(TAX, header = FALSE, stringsAsFactors = FALSE)
+load_taxonomy_table <- function(tax_path) {
+    tax <- utils::read.delim(tax_path, header = FALSE, stringsAsFactors = FALSE)
     colnames(tax)<-c("prot","taxid","ev","path")
     dup_idx <- duplicated(tax$prot)
     tax$prot[dup_idx] <- paste0(tax$prot[dup_idx], "_dup")
     return(tax)
 }
 
-#' Title
+#' Parse protein identifiers into config, start, end, and taxid columns
 #'
-#' @param tax TODO
+#' @param tax Data frame. Must contain a column `prot` with protein IDs and a `taxid` column. Typically from load_taxonomy_table
 #'
-#' @return TODO
+#' @return A Data frame with columns `contig`, `start`, `end` and  `ev`
 #' @keywords  internal
-#'
-#' @examples TODO
 parse_protein_ids <- function(tax) {
     parsed <- strsplit(sapply(strsplit(tax$prot, "\\|"), `[`, 2), split = "[:\\-]")
     tax <- data.frame(
@@ -257,50 +252,44 @@ parse_protein_ids <- function(tax) {
     return(tax)
 }
 
-#' Title
+#' Filter taxonomy entries with valid taxonomic IDs
 #'
-#' @param tax TODO
+#' @param tax Data frame. Must contain a `taxid` column. Typically from parse_protein_ids.
 #'
-#' @return TODO
+#' @return Filtered data frame with only rows where `taxid` is not zero.
 #' @keywords  internal
-#'
-#' @examples TODO
 filter_valid_taxids <- function(tax) {
     tax <- tax[tax$taxid != 0, ]
 }
 
-#' Title
+#' Fetch taxonomy classification from NCBI database
 #'
-#' @param taxids TODO
-#' @param API_KEY TODO
+#' @param taxids Integer or character vector of taxonomic IDs.
+#' @param api_key Character string or NULL. API key needed for NCBI Entrez.
 #'
-#' @return TODO
+#' @return A named list of taxonomic classification.
 #' @keywords  internal
-#'
-#' @examples TODO
-fetch_tax_classification <- function(taxids, API_KEY = NULL) {
-    #if (!is.null(API_KEY)) Sys.setenv(ENTREZ_KEY = API_KEY)
-    Sys.setenv(ENTREZ_KEY = API_KEY)
-    classification(unique(taxids), db = "ncbi")
+fetch_tax_classification <- function(taxids, api_key = NULL) {
+    #if (!is.null(api_key)) Sys.setenv(ENTREZ_KEY = api_key)
+    Sys.setenv(ENTREZ_KEY = api_key)
+    taxize::classification(unique(taxids), db = "ncbi")
 }
 
-#' Title
+#' Build a taxonomy data frame from classification list
 #'
-#' @param taxonomy_list TODO
+#' @param taxonomy_list Named list. Taxonomic classification data frame filtered by major ranks.
 #'
-#' @return TODO
+#' @return Data frame with columns from taxon names and major taxonomic ranks (domain to genus).
 #' @keywords  internal
-#'
-#' @examples TODO
 build_taxonomy_dataframe <- function(taxonomy_list) {
     class(taxonomy_list) <- NULL
-    tibble(
+    tibble::tibble(
         names = names(taxonomy_list),
         taxonomy_list = taxonomy_list
     ) %>%
-        unnest(cols = c(taxonomy_list)) %>%
-        filter(rank %in% c("domain", "kingdom", "phylum", "class", "order", "family", "genus")) %>%
-        select(-id) %>%
+        tidyr::unnest(cols = c(taxonomy_list)) %>%
+        dplyr::filter(rank %in% c("domain", "kingdom", "phylum", "class", "order", "family", "genus")) %>%
+        dplyr::select(-id) %>%
         tidyr::pivot_wider(names_from = rank, values_from = name) %>%
         select(name = names, domain, kingdom, phylum, class, order, family, genus) %>%
         as.data.frame() %>%
@@ -310,27 +299,23 @@ build_taxonomy_dataframe <- function(taxonomy_list) {
         }
 }
 
-#' Title
+#' Merge original taxonomy data with classification data frame
 #'
-#' @param tax TODO
-#' @param tax_df TODO
+#' @param tax Data frame. Original taxonomy data including `taxid`.
+#' @param tax_df Data frame. Classification data frame keyed by taxonomic ID.
 #'
-#' @return TODO
+#' @return Combined data frame with columns from both inputs.
 #' @keywords  internal
-#'
-#' @examples TODO
 merge_tax_data <- function(tax, tax_df) {
     cbind(tax, tax_df[as.character(tax$taxid), ])
 }
 
-#' Title
+#' Fill missing taxonomy ranks by propagating from higher levels
 #'
-#' @param tax TODO
+#' @param tax Data frame. Taxonomy data frame with columns for ranks: domain, kingdom, phylum, etc.
 #'
-#' @return TODO
+#' @return Taxonomy data frame with missing ranks filled where possible.
 #' @keywords  internal
-#'
-#' @examples TODO
 fill_missing_taxonomy <- function(tax) {
     tax2 <- tax
     levels <- c("domain", "kingdom", "phylum", "class", "order", "family", "genus")
@@ -345,14 +330,12 @@ fill_missing_taxonomy <- function(tax) {
     return(tax2)
 }
 
-#' Title
+#' Build taxonomic partitions for clustering
 #'
-#' @param tax TODO
+#' @param tax Data frame. Taxonomy data frame with contig and rank columns.
 #'
-#' @return TODO
+#' @return List of `cl_partition` objects, one per taxonomic rank.
 #' @keywords  internal
-#'
-#' @examples TODO
 build_taxonomic_partitions <- function(tax) {
     levels <- c("domain", "kingdom", "phylum", "class", "order", "family", "genus")
     lapply(levels, function(level){
@@ -361,33 +344,29 @@ build_taxonomic_partitions <- function(tax) {
         taxonomy_list[is.na(taxonomy_list)] <- 0
         taxonomy_list <- cbind(taxonomy_list, unknown = 0)
         taxonomy_list[rowSums(taxonomy_list) == 0, "unknown"] <- 1
-        as.cl_partition(taxonomy_list)
+        clue::as.cl_partition(taxonomy_list)
     })
 }
 
-#' Title
+#' Compute consensus cluster classification from cluster list
 #'
-#' @param cl_list TODO
+#' @param cl_list List of cluster partitions.
 #'
-#' @return TODO
+#' @return Vector of factor of consensus cluster class IDs.
 #' @keywords  internal
-#'
-#' @examples TODO
 compute_consensus_clusters <- function(cl_list) {
-    cl_ens <- cl_ensemble(list = cl_list)
-    consensus <- cl_consensus(cl_ens, method="SE", control = list(verbose = TRUE, nruns = 10, maxiter = 100))
-    cl_class_ids(consensus)
+    cl_ens <- clue::cl_ensemble(list = cl_list)
+    consensus <- clue::cl_consensus(cl_ens, method="SE", control = list(verbose = TRUE, nruns = 10, maxiter = 100))
+    clue::cl_class_ids(consensus)
 }
 
-#' Title
+#' Assign consensus cluster IDs to the data
 #'
-#' @param data TODO
-#' @param consensus_ids TODO
+#' @param data Data frame. Input data to which consensus clusters will be assigned.
+#' @param consensus_ids Named vector or factor. Consensus cluster IDs indexed by row names of `data`
 #'
-#' @return TODO
+#' @return The input data frame with an additional column `tax_cons` containing cluster assignments.
 #' @keywords  internal
-#'
-#' @examples TODO
 assign_consensus_clusters <- function(data, consensus_ids) {
     data$tax_cons <- 0
     data[names(consensus_ids), "tax_cons"] <- consensus_ids
@@ -395,15 +374,13 @@ assign_consensus_clusters <- function(data, consensus_ids) {
 }
 
 
-#' Title
+#' Extract taxonomic labels from cluster partitions
 #'
-#' @param data TODO
-#' @param cl_list TODO
+#' @param data Data frame. Input data with rownames matching cluster partitions.
+#' @param cl_list List. A list of cluster partition objects, each representing taxonomic clustering at different ranks.
 #'
-#' @return TODO
+#' @return A data frame with taxonomic classification labels for each input row, with columns for taxonomic ranks.
 #' @keywords  internal
-#'
-#' @examples TODO
 extract_taxonomic_labels <- function(data, cl_list) {
     levels_tax <- c("domain", "kingdom", "phylum", "class", "order", "family", "genus")
     classification <- matrix(
@@ -414,7 +391,7 @@ extract_taxonomic_labels <- function(data, cl_list) {
     )
     for (i in seq_along(levels_tax)) {
         cl <- cl_list[[i]]
-        cluster_ids <- cl_class_ids(cl)
+        cluster_ids <- clue::cl_class_ids(cl)
         rownames_matrix <- rownames(cl[[1]])
         colnames_matrix <- colnames(cl[[1]])
         assigned <- colnames_matrix[cluster_ids]
@@ -426,14 +403,12 @@ extract_taxonomic_labels <- function(data, cl_list) {
     return(classification_df)
 }
 
-#' Title
+#' Summarize taxonomic classification with simplified labels
 #'
-#' @param data TODO
+#' @param data Data frame. Input data with taxonomic columns (`domain`, `class` and `tax_cons`)
 #'
-#' @return TODO
+#' @return The input data frame with updated `summ_class` and recoded `tax_cons` factor levels.
 #' @keywords  internal
-#'
-#' @examples TODO
 summarize_taxonomy <- function(data) {
     data$summ_class <- ifelse(data$domain == "Bacteria", "Bacteria", data$class)
     data$summ_class[data$class == "Cyanophyceae"] <- "Cyanophyceae"

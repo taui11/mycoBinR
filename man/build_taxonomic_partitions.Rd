@@ -2,20 +2,17 @@
 % Please edit documentation in R/helpers_build_contig_table.R
 \name{build_taxonomic_partitions}
 \alias{build_taxonomic_partitions}
-\title{Title}
+\title{Build taxonomic partitions for clustering}
 \usage{
 build_taxonomic_partitions(tax)
 }
 \arguments{
-\item{tax}{TODO}
+\item{tax}{Data frame. Taxonomy data frame with contig and rank columns.}
 }
 \value{
-TODO
+List of \code{cl_partition} objects, one per taxonomic rank.
 }
 \description{
-Title
-}
-\examples{
-TODO
+Build taxonomic partitions for clustering
 }
 \keyword{internal}

@@ -2,20 +2,17 @@
 % Please edit documentation in R/helpers_build_contig_table.R
 \name{filter_valid_taxids}
 \alias{filter_valid_taxids}
-\title{Title}
+\title{Filter taxonomy entries with valid taxonomic IDs}
 \usage{
 filter_valid_taxids(tax)
 }
 \arguments{
-\item{tax}{TODO}
+\item{tax}{Data frame. Must contain a \code{taxid} column. Typically from parse_protein_ids.}
 }
 \value{
-TODO
+Filtered data frame with only rows where \code{taxid} is not zero.
 }
 \description{
-Title
-}
-\examples{
-TODO
+Filter taxonomy entries with valid taxonomic IDs
 }
 \keyword{internal}

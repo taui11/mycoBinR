@@ -2,20 +2,17 @@
 % Please edit documentation in R/helpers_build_contig_table.R
 \name{compute_consensus_clusters}
 \alias{compute_consensus_clusters}
-\title{Title}
+\title{Compute consensus cluster classification from cluster list}
 \usage{
 compute_consensus_clusters(cl_list)
 }
 \arguments{
-\item{cl_list}{TODO}
+\item{cl_list}{List of cluster partitions.}
 }
 \value{
-TODO
+Vector of factor of consensus cluster class IDs.
 }
 \description{
-Title
-}
-\examples{
-TODO
+Compute consensus cluster classification from cluster list
 }
 \keyword{internal}
