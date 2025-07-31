@@ -22,4 +22,5 @@ Imports:
     tidyr,
     dplyr,
     magrittr,
-    clue
+    clue,
+    Biostrings
