@@ -283,8 +283,6 @@ fetch_tax_classification <- function(taxids, api_key = NULL) {
 #'
 #' @param taxonomy_list Named list. Taxonomic classification data frame filtered by major ranks.
 #'
-#' @importFrom magrittr %>%
-#'
 #' @return Data frame with columns from taxon names and major taxonomic ranks (domain to genus).
 #' @keywords  internal
 build_taxonomy_dataframe <- function(taxonomy_list) {
