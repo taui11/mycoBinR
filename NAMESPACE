@@ -3,5 +3,6 @@
 export(build_contig_table)
 export(create_filepaths_df)
 export(export_binned)
+export(incorporate_bam_bubbles)
 export(parse_telomeres)
 importFrom(magrittr,"%>%")
