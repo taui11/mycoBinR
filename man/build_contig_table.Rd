@@ -25,8 +25,9 @@ and taxonomic context.
 \examples{
 \dontrun{
 paths_df <- data.frame(
-  name = c("assembly", "coverage", "busco", "taxonomy"),
-  path = c("assembly_report.txt", "coverage.tsv", "busco.txt", "taxonomy.tsv")
+    name = c("assembly_info", "coverage", "busco", "taxonomy"),
+    path = c("assembly_info.txt", "coverage.tsv", "busco.txt", "taxonomy.tsv")
+    stringsAsFactors = FALSE
 )
 build_contig_table(paths_df, API_KEY = "your_ncbi_api_key")
 }
