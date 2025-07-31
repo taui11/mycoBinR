@@ -2,21 +2,43 @@
 % Please edit documentation in R/parse_telomeres.R
 \name{parse_telomeres}
 \alias{parse_telomeres}
-\title{Title}
+\title{Parse and classify telomere motif hits from left and right input files}
 \usage{
 parse_telomeres(DATA, paths_df)
 }
 \arguments{
-\item{DATA}{TODO}
+\item{DATA}{Data frame. The main data dable containing contig information. Row names must be contig names. Typically from build_contig_table.}
 
-\item{paths_df}{TODO}
+\item{paths_df}{Data frame. Must contain columns \code{name} and \code{path}. Typically from create_filepaths_df.}
 }
 \value{
-TODO
+A data frame with telomere classification per contig. Includes:
+\describe{
+\item{leftmotif}{Motif found at the left end (or "0" if none)}
+\item{leftscore}{Score of the left motif (numeric)}
+\item{rightmotif}{Motif found at the right end (or "0" if none)}
+\item{rightrc}{Reverse-complement of the right motif}
+\item{rightscore}{Score of the right motif (numeric)}
+\item{telcomp}{Classification of telomere completeness:\cr
+\strong{0}: No confident telomere motif\cr
+\strong{1}: Partial match (one side matches known telomere motifs)\cr
+\strong{2}: Confident match (both sides match same or reverse-complement motifs)\cr
+}
+}
 }
 \description{
-Title
+This function processes telomere motif detection results from both the left and right
+chromosome ends, builds a combined data frame of telomeric signals, and classifies them
+based on motif similarity and presence.
 }
 \examples{
-\dontrun{TODO}
+\dontrun{
+paths_df <- data.frame(
+    name = c("assembly_info", "coverage", "busco", "taxonomy"),
+    path = c("assembly_info.txt", "coverage.tsv", "busco.txt", "taxonomy.tsv")
+    stringsAsFactors = FALSE
+)
+data <- build_contig_table(paths_df, API_KEY = "your_ncbi_api_key")
+parse_telomeres(DATA, paths_df)
+}
 }

@@ -2,21 +2,21 @@
 % Please edit documentation in R/helpers_parse_telomeres.R
 \name{build_telomere_dataframe}
 \alias{build_telomere_dataframe}
-\title{Title}
+\title{Building telomere data frame with left and right telomeres}
 \usage{
 build_telomere_dataframe(contigs, left, right)
 }
 \arguments{
-\item{contigs}{TODO}
+\item{contigs}{Character vector. List of contig names.}
 
-\item{left}{TODO}
+\item{left}{Data frame. Output from process_telomere_side of the left side.}
 
-\item{right}{TODO}
+\item{right}{Data frame. Output from process_telomere_side of the right side.}
 }
 \value{
-TODO
+A data frame with telomeric motif and score information for each contig side.
 }
 \description{
-Title
+Building telomere data frame with left and right telomeres
 }
 \keyword{internal}

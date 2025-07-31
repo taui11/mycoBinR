@@ -2,17 +2,22 @@
 % Please edit documentation in R/helpers_parse_telomeres.R
 \name{classify_telomeres}
 \alias{classify_telomeres}
-\title{Title}
+\title{Classifying telomeres based on motif match strength}
 \usage{
 classify_telomeres(df)
 }
 \arguments{
-\item{df}{TODO}
+\item{df}{Data frame. Output from build_telomere_dataframe, containing left and right telomeric motifs, scores, and reverse complements.}
 }
 \value{
-TODO
+The same data frame with an added column \code{telcomp} indicating:
+\describe{
+\item{0}{No confident telomere motif}
+\item{1}{Partial match (one side matches known telomere motifs)}
+\item{2}{Confident match (both sides match same or reverse-complement motifs)}
+}
 }
 \description{
-Title
+Classifying telomeres based on motif match strength
 }
 \keyword{internal}

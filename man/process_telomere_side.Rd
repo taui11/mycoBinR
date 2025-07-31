@@ -2,19 +2,19 @@
 % Please edit documentation in R/helpers_parse_telomeres.R
 \name{process_telomere_side}
 \alias{process_telomere_side}
-\title{Title}
+\title{Process telomere motif hits for one chromosome side}
 \usage{
 process_telomere_side(file, side)
 }
 \arguments{
-\item{file}{TODO}
+\item{file}{Data frame. Contains columns motif and chrscores, typically from a parsed telomere file.}
 
-\item{side}{TODO}
+\item{side}{Character string. Indicates whether the hits are from the "left" or "right" telomeric region.}
 }
 \value{
-TODO
+A tibble with columns: \code{motif}, \code{side}, \code{contig}, \code{score}, and \code{rc} (reverse complement).
 }
 \description{
-Title
+Process telomere motif hits for one chromosome side
 }
 \keyword{internal}

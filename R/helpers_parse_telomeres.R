@@ -2,12 +2,12 @@ if (getRversion() >= "2.15.1") {
     utils::globalVariables(c("chr", "score", "motif"))
 }
 
-#' Title
+#' Process telomere motif hits for one chromosome side
 #'
-#' @param file TODO
-#' @param side TODO
+#' @param file Data frame. Contains columns motif and chrscores, typically from a parsed telomere file.
+#' @param side Character string. Indicates whether the hits are from the "left" or "right" telomeric region.
 #'
-#' @return TODO
+#' @return A tibble with columns: `motif`, `side`, `contig`, `score`, and `rc` (reverse complement).
 #' @keywords internal
 process_telomere_side <- function(file, side) {
     df <- file
@@ -22,13 +22,13 @@ process_telomere_side <- function(file, side) {
         dplyr::mutate(rc = sapply(motif, function(x) as.character(Biostrings::reverseComplement(Biostrings::DNAString(x)))))
 }
 
-#' Title
+#' Building telomere data frame with left and right telomeres
 #'
-#' @param contigs TODO
-#' @param left TODO
-#' @param right TODO
+#' @param contigs Character vector. List of contig names.
+#' @param left Data frame. Output from process_telomere_side of the left side.
+#' @param right Data frame. Output from process_telomere_side of the right side.
 #'
-#' @return TODO
+#' @return A data frame with telomeric motif and score information for each contig side.
 #' @keywords internal
 build_telomere_dataframe <- function(contigs, left, right) {
     telomeres_out <- lapply(contigs, function(contig) {
@@ -56,11 +56,16 @@ build_telomere_dataframe <- function(contigs, left, right) {
     return(df)
 }
 
-#' Title
+#' Classifying telomeres based on motif match strength
 #'
-#' @param df TODO
+#' @param df Data frame. Output from build_telomere_dataframe, containing left and right telomeric motifs, scores, and reverse complements.
 #'
-#' @return TODO
+#' @return The same data frame with an added column `telcomp` indicating:
+#' \describe{
+#'   \item{0}{No confident telomere motif}
+#'   \item{1}{Partial match (one side matches known telomere motifs)}
+#'   \item{2}{Confident match (both sides match same or reverse-complement motifs)}
+#' }
 #' @keywords internal
 classify_telomeres <- function(df) {
     df$telcomp <- 0
