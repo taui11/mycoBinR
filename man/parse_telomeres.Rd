@@ -38,7 +38,7 @@ paths_df <- data.frame(
     path = c("assembly_info.txt", "coverage.tsv", "busco.txt", "taxonomy.tsv")
     stringsAsFactors = FALSE
 )
-data <- build_contig_table(paths_df, API_KEY = "your_ncbi_api_key")
+DATA <- build_contig_table(paths_df, API_KEY = "your_ncbi_api_key")
 parse_telomeres(DATA, paths_df)
 }
 }
