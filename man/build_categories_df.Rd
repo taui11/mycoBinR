@@ -2,17 +2,23 @@
 % Please edit documentation in R/helpers_export_binned.R
 \name{build_categories_df}
 \alias{build_categories_df}
-\title{Title}
+\title{Building data frame for taxonomic categories}
 \usage{
 build_categories_df(data)
 }
 \arguments{
-\item{data}{TODO}
+\item{data}{Data frame. Contains at leas tax_cons and len column. Typically from incorporate_bam_bubbles.}
 }
 \value{
-TODO
+A data frame with columns:
+\describe{
+\item{chrom}{Chromosome/contig names (rownames of input).}
+\item{chromStart}{Start position, always 0.}
+\item{chromEnd}{End position, taken from the \code{len} column of input data.}
+\item{bin}{Factor vector representing bins labeled by taxonomic consensus.}
+}
 }
 \description{
-Title
+Building data frame for taxonomic categories
 }
 \keyword{internal}

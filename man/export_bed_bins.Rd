@@ -2,21 +2,21 @@
 % Please edit documentation in R/helpers_export_binned.R
 \name{export_bed_bins}
 \alias{export_bed_bins}
-\title{Title}
+\title{EXPORT BED files grouped by taxonomic bins}
 \usage{
 export_bed_bins(categories, bed_folder, sample_name)
 }
 \arguments{
-\item{categories}{TODO}
+\item{categories}{Data frame. Contains at least a bin column. Typically from build_categories_df.}
 
-\item{bed_folder}{TODO}
+\item{bed_folder}{Character string. Path to the binned BED directory.}
 
-\item{sample_name}{TODO}
+\item{sample_name}{Character string. Sample/Title identifier of the data (e.g. "001").}
 }
 \value{
-TODO
+NULL. Saves binned BED files in the bed_folder directory.
 }
 \description{
-Title
+EXPORT BED files grouped by taxonomic bins
 }
 \keyword{internal}

@@ -2,19 +2,19 @@
 % Please edit documentation in R/helpers_export_binned.R
 \name{create_output_dirs}
 \alias{create_output_dirs}
-\title{Title}
+\title{Create output directories}
 \usage{
 create_output_dirs(fasta_folder, bed_folder)
 }
 \arguments{
-\item{fasta_folder}{TODO}
+\item{fasta_folder}{Character string. Path to the directory where binned FASTA files will be saved.}
 
-\item{bed_folder}{TODO}
+\item{bed_folder}{Character string. Path to the directory where binned BED files will be saved.}
 }
 \value{
-TODO
+NULL. Creates two new directories.
 }
 \description{
-Title
+Create output directories
 }
 \keyword{internal}

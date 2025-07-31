@@ -2,23 +2,33 @@
 % Please edit documentation in R/export_binned.R
 \name{export_binned}
 \alias{export_binned}
-\title{Title}
+\title{Export binned FASTA and BED files based on taxonomic categories}
 \usage{
 export_binned(DATA, paths_df, SAMPLE)
 }
 \arguments{
-\item{DATA}{TODO}
+\item{DATA}{Data frame. Contains taxonomic and positional data used to create categories.}
 
-\item{paths_df}{TODO}
+\item{paths_df}{Data frame. Must include columns \code{name} and \code{path} specifying locations of input and output directories/files. Typically from create_filepaths_df.}
 
-\item{SAMPLE}{TODO}
+\item{SAMPLE}{Character string. Sample or dataset identifier used for naming output files.}
 }
 \value{
-TODO
+NULL. Wites binned FASTA and BED files to specified directories.
 }
 \description{
-Title
+This function exports contig-level sequence and annotation data into
+separate FASTA and BED files, grouped by taxonomic bin. It organizes the data
+based on a classification scheme and writes each bin’s sequences and regions
+to separate files for downstream analysis or visualization.
 }
 \examples{
-TODO
+\dontrun{
+paths <- data.frame(
+    name = c("assembly", "fasta_folder", "bed_folder"),
+    path = c("path/to/assembly.fasta", "path/to/fasta_bins", "path/to/bed_bins"),
+    stringsAsFactors = FALSE
+)
+export_binned(DATA, paths, "001")
+}
 }

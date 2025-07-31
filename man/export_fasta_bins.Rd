@@ -2,23 +2,23 @@
 % Please edit documentation in R/helpers_export_binned.R
 \name{export_fasta_bins}
 \alias{export_fasta_bins}
-\title{Title}
+\title{Export FASTA sequences grouped by taxonomic bins}
 \usage{
 export_fasta_bins(fasta, categories, fasta_folder, sample_name)
 }
 \arguments{
-\item{fasta}{TODO}
+\item{fasta}{List of class "DNAbin" or "AAbin".}
 
-\item{categories}{TODO}
+\item{categories}{Data frame. Contains at least a bin column. Typically from build_categories_df.}
 
-\item{fasta_folder}{TODO}
+\item{fasta_folder}{Character string. Path to the binned FASTA directory.}
 
-\item{sample_name}{TODO}
+\item{sample_name}{Character string. Sample/Title identifier of the data (e.g. "001").}
 }
 \value{
-TODO
+NULL. Saves binned FASTA files in the fasta_folder directory.
 }
 \description{
-Title
+Export FASTA sequences grouped by taxonomic bins
 }
 \keyword{internal}
