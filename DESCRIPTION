@@ -26,4 +26,5 @@ Imports:
     Biostrings,
     Rsamtools,
     igraph,
-    knitr
+    knitr,
+    reshape2

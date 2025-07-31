@@ -35,7 +35,7 @@ based on motif similarity and presence.
 \dontrun{
 paths_df <- data.frame(
     name = c("assembly_info", "coverage", "busco", "taxonomy"),
-    path = c("assembly_info.txt", "coverage.tsv", "busco.txt", "taxonomy.tsv")
+    path = c("assembly_info.txt", "coverage.tsv", "busco.txt", "taxonomy.tsv"),
     stringsAsFactors = FALSE
 )
 DATA <- build_contig_table(paths_df, API_KEY = "your_ncbi_api_key")

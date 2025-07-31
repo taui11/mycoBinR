@@ -1,5 +1,5 @@
 if (getRversion() >= "2.15.1") {
-    utils::globalVariables(c("pos", "sl", "el", "sr", "er", "value", ".", "Var1"))
+    utils::globalVariables(c("pos", "sl", "el", "sr", "er", "value"))
 }
 
 #' Title
@@ -113,28 +113,16 @@ calculate_shared_matrix <- function(to_net) {
     )
 
     tri <- upper.tri(shared_matrix, diag = FALSE)
-
-    #shared_matrix <- melt(shared_matrix)[tri, ]
-
-    shared_df <- as.data.frame(shared_matrix) %>%
-        dplyr::mutate(Var1 = rownames(.)) %>%
-        tidyr::pivot_longer(
-            cols = -Var1,
-            names_to = "Var2",
-            values_to = "value"
-        )
-
-    shared_df <- shared_df[tri, ]
-
+    shared_matrix <- reshape2::melt(shared_matrix)[tri, ]
     foo_net <- table(to_net$qname, to_net$flank)
 
     nc <- parallel::detectCores(logical = FALSE) - 1
     cl <- parallel::makeCluster(nc)
     parallel::clusterExport(cl, "foo_net", envir = environment())
 
-    shared_df$value <- parallel::parApply(
+    shared_matrix$value <- parallel::parApply(
         cl,
-        shared_df[, c("Var1", "Var2")],
+        shared_matrix,
         1,
         FUN = function(x) {
             col1 <- as.character(x[1])
@@ -150,7 +138,7 @@ calculate_shared_matrix <- function(to_net) {
         }
     )
     parallel::stopCluster(cl)
-    return(shared_df[shared_df$value != 0, ])
+    return(shared_matrix[shared_matrix$value != 0, ])
 }
 
 #' Title
@@ -182,17 +170,9 @@ detect_cluster <- function(shared_matrix, DATA) {
     contig_names <- paste0("contig_", sapply(strsplit(names(m1), "_"), `[`, 2))
 
     m1_table <- table(contig_names, m1)
-    #m1_melted <- melt(m1_table)
+    m1_melted <- reshape2::melt(m1_table)
 
-    m1_df <- as.data.frame.matrix(m1_table) %>%
-        dplyr::mutate(contig_names = rownames(.)) %>%
-        tidyr::pivot_longer(
-            cols = -contig_names,
-            names_to = "m1",
-            values_to = "value"
-        )
-
-    m1_filtered <- subset(m1_df, value == 2)
+    m1_filtered <- subset(m1_melted, value == 2)
 
     rownames(m1_filtered) <- m1_filtered$contig_names
 
