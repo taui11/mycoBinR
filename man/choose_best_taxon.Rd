@@ -2,19 +2,19 @@
 % Please edit documentation in R/helpers_incorporate_bam_bubbles.R
 \name{choose_best_taxon}
 \alias{choose_best_taxon}
-\title{Title}
+\title{Choose the best taxon for a group of contigs}
 \usage{
 choose_best_taxon(group_contigs, DATA)
 }
 \arguments{
-\item{group_contigs}{TODO}
+\item{group_contigs}{Character vector. Names of contigs in a cluster.}
 
-\item{DATA}{TODO}
+\item{DATA}{Data frame. Main contig data table containing coverage and taxonomic assignments (\code{tax_cons} column).}
 }
 \value{
-TODO
+Character. The taxon from \code{tax_cons} that best represents the cluster based on coverage similarity.
 }
 \description{
-Title
+Choose the best taxon for a group of contigs
 }
 \keyword{internal}

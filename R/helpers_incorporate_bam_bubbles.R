@@ -4,7 +4,7 @@ if (getRversion() >= "2.15.1") {
 
 #' Build inclusion ranges for the contigs based on telomere motifs
 #'
-#' @param DATA Data frame. The main data dable containing contig information. Row names must be contig names. Typically from build_contig_table.
+#' @param DATA Data frame. Main contig data table with row names corresponding to contig names.
 #' @param telomeres Data frame. Telomere information per contig, typically produced by `parse_telomeres()`. Must include columns for left and right motifs, scores, and telomere completeness.
 #'
 #' @return A data frame with one row per contig and columns:
@@ -44,11 +44,20 @@ create_include_ranges <- function(DATA, telomeres) {
     return(include_ranges)
 }
 
-#' Title
+#' Load supplementary reads from BAM file
 #'
-#' @param bam_file TODO
+#' @param bam_file Character string. Path to BAM file.
 #'
-#' @return TODO
+#' @return Data frame with columns:
+#'   \describe{
+#'     \item{qname}{Read name (query name)}
+#'     \item{rname}{Reference sequence name (contig/chromosome the read maps to)}
+#'     \item{strand}{Strand of the alignment ("+" or "-")}
+#'     \item{pos}{1-based start position of the alignment on the reference}
+#'     \item{mapq}{Mapping quality of the alignment}
+#'     \item{tlen}{Template length (insert size)}
+#'   }
+#'
 #' @keywords internal
 load_supplementary_reads <- function(bam_file) {
     bam_data <- Rsamtools::scanBam(Rsamtools::BamFile(bam_file))[[1]]
@@ -72,13 +81,18 @@ load_supplementary_reads <- function(bam_file) {
     return(to_net)
 }
 
-#' Title
+#' Filter supplementary reads by contig inclusion ranges
 #'
-#' @param to_net TODO
-#' @param include_ranges TODO
-#' @param DATA TODO
+#' @param to_net Data frame. Supplementary read information, typically from `load_supplementary_reads()`.
+#' @param include_ranges Data frame. Inclusion ranges per contig, typically produced by `create_include_ranges()`.
+#' @param DATA Data frame. Main contig data table with row names corresponding to contig names.
 #'
-#' @return TODO
+#' @return Data frame. Filtered supplementary reads with additional columns:
+#'      \describe{
+#'          \item{tlen}{Contig length from `DATA`}
+#'          \item{flank}{Factor indicating left (_l) or right (_r) flank of the contig based on position}
+#'      }
+#'
 #' @keywords internal
 filter_by_include_ranges <- function(to_net, include_ranges, DATA) {
     include_ranges <- include_ranges %>% tibble::rownames_to_column(var = "contig")
@@ -104,11 +118,17 @@ filter_by_include_ranges <- function(to_net, include_ranges, DATA) {
     return(to_net)
 }
 
-#' Title
+#' Calculate shared read matrix between flanks
 #'
-#' @param to_net TODO
+#' @param to_net Data frame. Supplementary read information with a `flank` factor, rypically from `filter_by_include_ranges()`.
 #'
-#' @return TODO
+#' @return Data frame. Upper-triangular matrix (melted) of shared reads between flanks with columns:
+#'      \describe{
+#'          \item{Var1}{First flank}
+#'          \item{Var2}{Second flank}
+#'          \item{value}{Proportion of shared reads between the two flanks}
+#'      }
+#'
 #' @keywords internal
 calculate_shared_matrix <- function(to_net) {
     flank_levels <- levels(to_net$flank)
@@ -148,12 +168,18 @@ calculate_shared_matrix <- function(to_net) {
     return(shared_matrix[shared_matrix$value != 0, ])
 }
 
-#' Title
+#' Detect contig clusters based on shared reads
 #'
-#' @param shared_matrix TODO
-#' @param DATA TODO
+#' @param shared_matrix Data frame. Melted upper-triangular shared read matrix between flanks, typically from `calculate_shared_matrix()`.
+#' @param DATA Data frame. Main contig data table with row names corresponding to contig names.
 #'
-#' @return TODO
+#' @return Data frame. Cluster assignments per contig including:
+#'      \describe{
+#'          \item{contig_names}{Contig name}
+#'          \item{m1}{Cluster ID factor}
+#'          \item{value}{Number of sides (left/right) in the cluster, always 2 for included clusters}
+#'      }
+#'
 #' @keywords internal
 detect_cluster <- function(shared_matrix, DATA) {
     left_right_pairs <- data.frame(
@@ -192,12 +218,12 @@ detect_cluster <- function(shared_matrix, DATA) {
     return(m1_final)
 }
 
-#' Title
+#' Refine taxonomic assignments based on clusters
 #'
-#' @param m1_final TODO
-#' @param DATA TODO
+#' @param m1_final Data frame. Cluster assignments per contig, typically produced by `detect_cluster()`. Must include a factor column `m1` for cluster IDs and row names corresponding to contigs.
+#' @param DATA Data frame. Main contig data table containing existing taxonomic assignments.
 #'
-#' @return TODO
+#' @return Data frame. Updated contig data table with a new column `tax_cons` containing consensus taxonomic assignments per cluster.
 #' @keywords internal
 refine_taxonomic_assignments <- function(m1_final, DATA) {
     for (group in levels(m1_final$m1)) {
@@ -208,12 +234,13 @@ refine_taxonomic_assignments <- function(m1_final, DATA) {
     return(DATA)
 }
 
-#' Title
+#' Choose the best taxon for a group of contigs
 #'
-#' @param group_contigs TODO
-#' @param DATA TODO
+#' @param group_contigs Character vector. Names of contigs in a cluster.
+#' @param DATA Data frame. Main contig data table containing coverage and taxonomic assignments (`tax_cons` column).
 #'
-#' @return TODO
+#' @return Character. The taxon from `tax_cons` that best represents the cluster based on coverage similarity.
+#'
 #' @keywords internal
 choose_best_taxon <- function(group_contigs, DATA) {
     cluster_data <- DATA[group_contigs, ]

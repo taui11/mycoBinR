@@ -2,21 +2,25 @@
 % Please edit documentation in R/helpers_incorporate_bam_bubbles.R
 \name{filter_by_include_ranges}
 \alias{filter_by_include_ranges}
-\title{Title}
+\title{Filter supplementary reads by contig inclusion ranges}
 \usage{
 filter_by_include_ranges(to_net, include_ranges, DATA)
 }
 \arguments{
-\item{to_net}{TODO}
+\item{to_net}{Data frame. Supplementary read information, typically from \code{load_supplementary_reads()}.}
 
-\item{include_ranges}{TODO}
+\item{include_ranges}{Data frame. Inclusion ranges per contig, typically produced by \code{create_include_ranges()}.}
 
-\item{DATA}{TODO}
+\item{DATA}{Data frame. Main contig data table with row names corresponding to contig names.}
 }
 \value{
-TODO
+Data frame. Filtered supplementary reads with additional columns:
+\describe{
+\item{tlen}{Contig length from \code{DATA}}
+\item{flank}{Factor indicating left (_l) or right (_r) flank of the contig based on position}
+}
 }
 \description{
-Title
+Filter supplementary reads by contig inclusion ranges
 }
 \keyword{internal}

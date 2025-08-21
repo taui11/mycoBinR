@@ -2,7 +2,7 @@
 % Please edit documentation in R/incorporate_bam_bubbles.R
 \name{incorporate_bam_bubbles}
 \alias{incorporate_bam_bubbles}
-\title{Title}
+\title{Incorporate supplementary read connections to refine taxonomic assignments}
 \usage{
 incorporate_bam_bubbles(DATA, telomeres, paths_df)
 }
@@ -14,11 +14,22 @@ incorporate_bam_bubbles(DATA, telomeres, paths_df)
 \item{paths_df}{Data frame. Must contain columns \code{name} and \code{path}. Typically from create_filepaths_df.}
 }
 \value{
-TODO
+A data frame identical to \code{DATA}, but with updated taxonomic assignments (\code{tax_cons}) where clusters of contigs supported by supplementary reads have a consensus assignment.
 }
 \description{
-Title
+This function integrates supplementary read alignments from BAM files to detect contigs that are likely connected via sequencing reads.
+It builds inclusion ranges based on telomere motifs, filters reads to those mapping within these ranges, calculates shared read support between contig ends, detects clusters of connected contigs,
+and updates the taxonomic assignments (\code{tax_cons}) of contigs to reflect cluster-level consensus.
 }
 \examples{
-\dontrun{TODO}
+\dontrun{
+paths_df <- data.frame(
+    name = c("assembly_info", "coverage", "busco", "taxonomy", "bam_file"),
+    path = c("assembly_info.txt", "coverage.tsv", "busco.txt", "taxonomy.tsv", "reads.bam"),
+    stringsAsFactors = FALSE
+)
+DATA <- build_contig_table(paths_df, API_KEY = "your_ncbi_api_key")
+telomeres <- parse_telomeres(DATA, paths_df)
+DATA <- incorporate_bam_bubbles(DATA, telomeres, paths_df)
+}
 }

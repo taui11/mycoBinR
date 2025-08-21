@@ -4,7 +4,7 @@
 #' chromosome ends, builds a combined data frame of telomeric signals, and classifies them
 #' based on motif similarity and presence.
 #'
-#' @param DATA Data frame. The main data dable containing contig information. Row names must be contig names. Typically from build_contig_table.
+#' @param DATA Data frame. The main data table containing contig information. Row names must be contig names. Typically from build_contig_table.
 #' @param paths_df Data frame. Must contain columns `name` and `path`. Typically from create_filepaths_df.
 #'
 #' @return A data frame with telomere classification per contig. Includes:

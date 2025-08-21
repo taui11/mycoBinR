@@ -2,19 +2,24 @@
 % Please edit documentation in R/helpers_incorporate_bam_bubbles.R
 \name{detect_cluster}
 \alias{detect_cluster}
-\title{Title}
+\title{Detect contig clusters based on shared reads}
 \usage{
 detect_cluster(shared_matrix, DATA)
 }
 \arguments{
-\item{shared_matrix}{TODO}
+\item{shared_matrix}{Data frame. Melted upper-triangular shared read matrix between flanks, typically from \code{calculate_shared_matrix()}.}
 
-\item{DATA}{TODO}
+\item{DATA}{Data frame. Main contig data table with row names corresponding to contig names.}
 }
 \value{
-TODO
+Data frame. Cluster assignments per contig including:
+\describe{
+\item{contig_names}{Contig name}
+\item{m1}{Cluster ID factor}
+\item{value}{Number of sides (left/right) in the cluster, always 2 for included clusters}
+}
 }
 \description{
-Title
+Detect contig clusters based on shared reads
 }
 \keyword{internal}

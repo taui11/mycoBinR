@@ -7,7 +7,7 @@
 create_include_ranges(DATA, telomeres)
 }
 \arguments{
-\item{DATA}{Data frame. The main data dable containing contig information. Row names must be contig names. Typically from build_contig_table.}
+\item{DATA}{Data frame. Main contig data table with row names corresponding to contig names.}
 
 \item{telomeres}{Data frame. Telomere information per contig, typically produced by \code{parse_telomeres()}. Must include columns for left and right motifs, scores, and telomere completeness.}
 }

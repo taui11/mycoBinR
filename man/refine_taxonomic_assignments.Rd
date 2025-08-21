@@ -2,19 +2,19 @@
 % Please edit documentation in R/helpers_incorporate_bam_bubbles.R
 \name{refine_taxonomic_assignments}
 \alias{refine_taxonomic_assignments}
-\title{Title}
+\title{Refine taxonomic assignments based on clusters}
 \usage{
 refine_taxonomic_assignments(m1_final, DATA)
 }
 \arguments{
-\item{m1_final}{TODO}
+\item{m1_final}{Data frame. Cluster assignments per contig, typically produced by \code{detect_cluster()}. Must include a factor column \code{m1} for cluster IDs and row names corresponding to contigs.}
 
-\item{DATA}{TODO}
+\item{DATA}{Data frame. Main contig data table containing existing taxonomic assignments.}
 }
 \value{
-TODO
+Data frame. Updated contig data table with a new column \code{tax_cons} containing consensus taxonomic assignments per cluster.
 }
 \description{
-Title
+Refine taxonomic assignments based on clusters
 }
 \keyword{internal}

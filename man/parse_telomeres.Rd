@@ -7,7 +7,7 @@
 parse_telomeres(DATA, paths_df)
 }
 \arguments{
-\item{DATA}{Data frame. The main data dable containing contig information. Row names must be contig names. Typically from build_contig_table.}
+\item{DATA}{Data frame. The main data table containing contig information. Row names must be contig names. Typically from build_contig_table.}
 
 \item{paths_df}{Data frame. Must contain columns \code{name} and \code{path}. Typically from create_filepaths_df.}
 }

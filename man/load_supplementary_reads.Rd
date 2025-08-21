@@ -2,17 +2,25 @@
 % Please edit documentation in R/helpers_incorporate_bam_bubbles.R
 \name{load_supplementary_reads}
 \alias{load_supplementary_reads}
-\title{Title}
+\title{Load supplementary reads from BAM file}
 \usage{
 load_supplementary_reads(bam_file)
 }
 \arguments{
-\item{bam_file}{TODO}
+\item{bam_file}{Character string. Path to BAM file.}
 }
 \value{
-TODO
+Data frame with columns:
+\describe{
+\item{qname}{Read name (query name)}
+\item{rname}{Reference sequence name (contig/chromosome the read maps to)}
+\item{strand}{Strand of the alignment ("+" or "-")}
+\item{pos}{1-based start position of the alignment on the reference}
+\item{mapq}{Mapping quality of the alignment}
+\item{tlen}{Template length (insert size)}
+}
 }
 \description{
-Title
+Load supplementary reads from BAM file
 }
 \keyword{internal}

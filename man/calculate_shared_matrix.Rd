@@ -2,17 +2,22 @@
 % Please edit documentation in R/helpers_incorporate_bam_bubbles.R
 \name{calculate_shared_matrix}
 \alias{calculate_shared_matrix}
-\title{Title}
+\title{Calculate shared read matrix between flanks}
 \usage{
 calculate_shared_matrix(to_net)
 }
 \arguments{
-\item{to_net}{TODO}
+\item{to_net}{Data frame. Supplementary read information with a \code{flank} factor, rypically from \code{filter_by_include_ranges()}.}
 }
 \value{
-TODO
+Data frame. Upper-triangular matrix (melted) of shared reads between flanks with columns:
+\describe{
+\item{Var1}{First flank}
+\item{Var2}{Second flank}
+\item{value}{Proportion of shared reads between the two flanks}
+}
 }
 \description{
-Title
+Calculate shared read matrix between flanks
 }
 \keyword{internal}
