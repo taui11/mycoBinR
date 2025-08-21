@@ -1,8 +1,8 @@
 #' Title
 #'
-#' @param DATA TODO
-#' @param telomeres TODO
-#' @param paths_df TODO
+#' @param DATA Data frame. The main data dable containing contig information. Row names must be contig names. Typically from build_contig_table.
+#' @param telomeres Data frame. Telomere information per contig, typically produced by `parse_telomeres()`. Must include columns for left and right motifs, scores, and telomere completeness.
+#' @param paths_df Data frame. Must contain columns `name` and `path`. Typically from create_filepaths_df.
 #'
 #' @return TODO
 #' @export

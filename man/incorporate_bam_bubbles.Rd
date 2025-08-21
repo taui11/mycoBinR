@@ -7,11 +7,11 @@
 incorporate_bam_bubbles(DATA, telomeres, paths_df)
 }
 \arguments{
-\item{DATA}{TODO}
+\item{DATA}{Data frame. The main data dable containing contig information. Row names must be contig names. Typically from build_contig_table.}
 
-\item{telomeres}{TODO}
+\item{telomeres}{Data frame. Telomere information per contig, typically produced by \code{parse_telomeres()}. Must include columns for left and right motifs, scores, and telomere completeness.}
 
-\item{paths_df}{TODO}
+\item{paths_df}{Data frame. Must contain columns \code{name} and \code{path}. Typically from create_filepaths_df.}
 }
 \value{
 TODO

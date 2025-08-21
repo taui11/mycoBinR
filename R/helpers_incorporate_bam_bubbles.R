@@ -2,12 +2,19 @@ if (getRversion() >= "2.15.1") {
     utils::globalVariables(c("pos", "sl", "el", "sr", "er", "value"))
 }
 
-#' Title
+#' Build inclusion ranges for the contigs based on telomere motifs
 #'
-#' @param DATA TODO
-#' @param telomeres TODO
+#' @param DATA Data frame. The main data dable containing contig information. Row names must be contig names. Typically from build_contig_table.
+#' @param telomeres Data frame. Telomere information per contig, typically produced by `parse_telomeres()`. Must include columns for left and right motifs, scores, and telomere completeness.
 #'
-#' @return TODO
+#' @return A data frame with one row per contig and columns:
+#'   \describe{
+#'     \item{sl}{Start of left region (1-based, 0 if masked by telomere)}
+#'     \item{el}{End of left region (pmin 10000 or adjusted for telomere/overlap)}
+#'     \item{sr}{Start of right region (pmax contig length - 10000 or adjusted)}
+#'     \item{er}{End of right region (contig length, 0 if masked by telomere)}
+#'   }
+#'   Row names correspond to contig names.
 #' @keywords internal
 create_include_ranges <- function(DATA, telomeres) {
     include_ranges <- data.frame(

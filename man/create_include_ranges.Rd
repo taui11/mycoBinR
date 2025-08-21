@@ -2,19 +2,26 @@
 % Please edit documentation in R/helpers_incorporate_bam_bubbles.R
 \name{create_include_ranges}
 \alias{create_include_ranges}
-\title{Title}
+\title{Build inclusion ranges for the contigs based on telomere motifs}
 \usage{
 create_include_ranges(DATA, telomeres)
 }
 \arguments{
-\item{DATA}{TODO}
+\item{DATA}{Data frame. The main data dable containing contig information. Row names must be contig names. Typically from build_contig_table.}
 
-\item{telomeres}{TODO}
+\item{telomeres}{Data frame. Telomere information per contig, typically produced by \code{parse_telomeres()}. Must include columns for left and right motifs, scores, and telomere completeness.}
 }
 \value{
-TODO
+A data frame with one row per contig and columns:
+\describe{
+\item{sl}{Start of left region (1-based, 0 if masked by telomere)}
+\item{el}{End of left region (pmin 10000 or adjusted for telomere/overlap)}
+\item{sr}{Start of right region (pmax contig length - 10000 or adjusted)}
+\item{er}{End of right region (contig length, 0 if masked by telomere)}
+}
+Row names correspond to contig names.
 }
 \description{
-Title
+Build inclusion ranges for the contigs based on telomere motifs
 }
 \keyword{internal}
