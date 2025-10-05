@@ -9,15 +9,18 @@ mycoBinR
 
 <!-- badges: end -->
 
-**mycoBinR** helps you organize pipeline file paths and build tidy,
-analysis-ready tables for fungal/metagenome assemblies. It integrates
-contig metrics (coverage, GC, BUSCO, taxonomy), parses telomeres,
-refines consensus taxonomy using read-connection “bubbles”, and exports
-per-taxon **FASTA**/**BED** bins.
+**mycoBinR** helps you organize and analyze outputs from a
+Snakemake-based fungal/metagenome assembly pipeline.  
+At the current stage, the package is designed to work **directly with
+the directory structure and file naming conventions produced by the
+author’s Snakemake workflow**.  
+To use it successfully, you must either **run that pipeline** or
+**replicate its exact output layout and file formats** (assemblies,
+coverage, BUSCO, taxonomy, BAM files, etc.).
 
-This README is written in the style of the
-[*r-pkgs*](https://r-pkgs.org/) website: short motivation, reproducible
-examples, and clear function sections.
+It integrates contig metrics (coverage, GC, BUSCO, taxonomy), parses
+telomeres, refines consensus taxonomy using read-connection “bubbles”,
+and exports per-taxon **FASTA** and **BED** bins.
 
 ------------------------------------------------------------------------
 
