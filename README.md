@@ -114,22 +114,35 @@ export_binned(DATA2, paths_df, SAMPLE = "001")
 
 ## `build_contig_table()`
 
-Build a *single*, tidy table with one row per contig, combining assembly
-metrics, GC %, coverage summaries, BUSCO counts, and taxonomy.
-Optionally supply an Entrez API key to avoid rate limits.
+Constructs a tidy, per-contig data table by merging assembly statistics,
+GC content, coverage values, BUSCO completeness, and taxonomy
+assignments.  
+This table is the central object used for downstream filtering, telomere
+parsing, and binning.
+
+Optionally, you can provide an NCBI **Entrez API key** to make taxonomy
+lookups faster and avoid rate limits.
 
 ``` r
+# Build the main contig-level table
 DATA <- build_contig_table(
   paths_df,
   api_key = Sys.getenv("ENTREZ_KEY")  # optional but recommended
 )
 
-# Glimpse key columns (if present)
-subset_cols <- c(
-  "contig", "length", "gc", "cov_mean",
-  "busco_complete", "tax_raw", "tax_cons"
+# View key summary columns
+key_cols <- c(
+  "contig",          # contig ID
+  "length",          # contig length in bp
+  "gc",              # GC content
+  "cov_mean",        # mean coverage
+  "busco_complete",  # BUSCO completeness fraction
+  "tax_raw",         # raw taxonomy hit
+  "tax_cons"         # consensus taxonomy
 )
-print(DATA[intersect(names(DATA), subset_cols)])
+
+# Display only the relevant columns (if present)
+print(DATA[intersect(names(DATA), key_cols)])
 ```
 
 **Inputs**
