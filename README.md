@@ -120,14 +120,16 @@ assignments.
 This table is the central object used for downstream filtering, telomere
 parsing, and binning.
 
-Optionally, you can provide an NCBI **Entrez API key** to make taxonomy
-lookups faster and avoid rate limits.
+An **NCBI Entrez API key** is **required** for performing taxonomy
+lookups.  
+You can set it once per session or permanently in your R environment
+(see below).
 
 ``` r
 # Build the main contig-level table
 DATA <- build_contig_table(
   paths_df,
-  api_key = Sys.getenv("ENTREZ_KEY")  # optional but recommended
+  api_key = Sys.getenv("ENTREZ_KEY")  # required: NCBI Entrez API key
 )
 
 # View key summary columns
