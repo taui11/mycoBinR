@@ -24,7 +24,7 @@ create_filepaths_df <- function(base_path, project_nr, TITLE) {
             file.path(base_path, paste0("flye_output/", project_nr, TITLE, "_flye/assembly.fasta")),
             file.path(base_path, paste0("coverm_output/", project_nr, TITLE, "_mean_cov/mean_coverage.tsv")),
             file.path(base_path, paste0("busco_output/", project_nr, TITLE, "_busco/run_ascomycota_odb12/full_table.tsv")),
-            file.path(base_path, paste0("diamond_output/", project_nr, TITLE, "_taxonomy_prots/",project_nr, TITLE, ".m8")),
+            file.path(base_path, paste0("diamond_output/", project_nr, TITLE, "_taxonomy_prots/",project_nr, TITLE, "_taxprot")),
             file.path(base_path, paste0("flye_output/", project_nr, TITLE, "_flye/assembly_info.txt")),
             file.path(base_path, paste0("binning_output/", project_nr, TITLE, "_binned/contigs")),
             file.path(base_path, paste0("binning_output/", project_nr, TITLE, "_binned/beds")),
