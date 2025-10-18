@@ -1,6 +1,6 @@
 Package: mycoBinR
 Title: Functions to organize and analyze metagenome data
-Version: 0.1.0.9000
+Version: 0.1.1.9000
 Authors@R: 
     person("Paul", "Muehlauer", email = "paul.muehlauer@student.tugraz.at", role = c("aut", "cre"))
 Description: Provides tools for managing and analyzing fungal genome assembly data, 
