@@ -13,7 +13,6 @@ RoxygenNote: 7.3.2
 Suggests:
     testthat (>= 3.0.0),
     knitr,
-    reshape2,
     taxonomizr,
     jsonlite
 Config/testthat/edition: 3
@@ -30,4 +29,5 @@ Imports:
     Biostrings,
     Rsamtools,
     igraph,
-    parallel
+    parallel,
+    reshape2
